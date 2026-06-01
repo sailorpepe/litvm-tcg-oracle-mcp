@@ -1,13 +1,21 @@
-# 🔮 LitVM TCG Oracle — MCP Server
+<p align="center">
+  <img src="assets/banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
+</p>
 
-**The first Model Context Protocol server for the LitecoinVM ecosystem.**
+<h3 align="center">The first Model Context Protocol server for the LitecoinVM ecosystem.</h3>
 
+<p align="center">
 Give any AI agent access to 433K+ trading card products — with every actively-priced card cryptographically verifiable on-chain.
+</p>
 
-[![PyPI](https://img.shields.io/pypi/v/litvm-tcg-oracle?color=%230052FF&label=PyPI)](https://pypi.org/project/litvm-tcg-oracle/)
-[![Python](https://img.shields.io/pypi/pyversions/litvm-tcg-oracle)](https://pypi.org/project/litvm-tcg-oracle/)
-[![License](https://img.shields.io/badge/License-BUSL--1.1-blue.svg)](LICENSE)
-[![Chain](https://img.shields.io/badge/LiteForge-Chain%204441-silver.svg)](https://liteforge.calderaexplorer.xyz)
+<p align="center">
+  <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/badge/PyPI-litvm--tcg--oracle-0052FF?logo=pypi&logoColor=white" alt="PyPI"></a>
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">
+  <a href="LICENSE.md"><img src="https://img.shields.io/badge/License-BUSL--1.1-blue.svg" alt="License"></a>
+  <a href="https://liteforge.calderaexplorer.xyz"><img src="https://img.shields.io/badge/LiteForge-Chain%204441-silver.svg" alt="Chain"></a>
+</p>
+
+<!-- mcp-name: io.github.sailorpepe/litvm-tcg-oracle -->
 
 ---
 
