@@ -9,7 +9,7 @@ Give any AI agent access to 433K+ trading card products — with every actively-
 </p>
 
 <p align="center">
-  <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/badge/PyPI-litvm--tcg--oracle-0052FF?logo=pypi&logoColor=white" alt="PyPI"></a>
+  <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/pypi/v/litvm-tcg-oracle?color=%230052FF&label=PyPI&logo=pypi&logoColor=white" alt="PyPI"></a>
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">
   <a href="LICENSE.md"><img src="https://img.shields.io/badge/License-BUSL--1.1-blue.svg" alt="License"></a>
   <a href="https://liteforge.calderaexplorer.xyz"><img src="https://img.shields.io/badge/LiteForge-Chain%204441-silver.svg" alt="Chain"></a>
