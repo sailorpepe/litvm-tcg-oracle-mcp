@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
+  <img src="https://the-undesirables.com/litvm-banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
 </p>
 
 <h3 align="center">The first Model Context Protocol server for the LitecoinVM ecosystem.</h3>
@@ -9,9 +9,9 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
 </p>
 
 <p align="center">
-  <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/pypi/v/litvm-tcg-oracle?color=%230052FF&label=PyPI&logo=pypi&logoColor=white" alt="PyPI"></a>
-  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">
-  <a href="LICENSE.md"><img src="https://img.shields.io/badge/License-BUSL--1.1-blue.svg" alt="License"></a>
+  <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/pypi/v/litvm-tcg-oracle?color=%230052FF&label=PyPI&logo=pypi&logoColor=white" alt="PyPI"></a>&nbsp;
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">&nbsp;
+  <a href="https://github.com/sailorpepe/litvm-tcg-oracle-mcp/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/License-BUSL--1.1-blue.svg" alt="License"></a>&nbsp;
   <a href="https://liteforge.calderaexplorer.xyz"><img src="https://img.shields.io/badge/LiteForge-Chain%204441-silver.svg" alt="Chain"></a>
 </p>
 
@@ -307,7 +307,7 @@ Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Ca
 
 ## License
 
-[Business Source License 1.1](LICENSE)
+[Business Source License 1.1](LICENSE.md)
 
 - **Use freely** for development, research, and non-competing production use
 - **Cannot** operate a competing price oracle service on LitecoinVM
@@ -323,6 +323,6 @@ Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Ca
 - **Oracle API**: [oracle.the-undesirables.com](https://oracle.the-undesirables.com)
 - **LitecoinVM**: [litvm.com](https://litvm.com)
 - **Block Explorer**: [liteforge.calderaexplorer.xyz](https://liteforge.calderaexplorer.xyz)
-- **X**: [@the_undesirable](https://x.com/the_undesirable)
+- **X**: [@undesirables_ai](https://x.com/undesirables_ai)
 
 *Built by The Undesirables LLC — the first and only oracle on LitecoinVM.*
