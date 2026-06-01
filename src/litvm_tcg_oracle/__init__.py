@@ -10,6 +10,6 @@ on LiteForge (Chain ID 4441).
 Built by The Undesirables LLC · sailorpepe.eth
 """
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 __author__ = "The Undesirables LLC"
 __license__ = "BUSL-1.1"

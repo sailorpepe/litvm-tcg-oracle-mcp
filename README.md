@@ -12,7 +12,7 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
   <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/pypi/v/litvm-tcg-oracle?color=%230052FF&label=PyPI&logo=pypi&logoColor=white" alt="PyPI"></a>&nbsp;
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">&nbsp;
   <a href="https://github.com/sailorpepe/litvm-tcg-oracle-mcp/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/License-BUSL--1.1-blue.svg" alt="License"></a>&nbsp;
-  <a href="https://liteforge.calderaexplorer.xyz"><img src="https://img.shields.io/badge/LiteForge-Chain%204441-silver.svg" alt="Chain"></a>
+  <a href="https://liteforge.explorer.caldera.xyz"><img src="https://img.shields.io/badge/LiteForge-Chain%204441-silver.svg" alt="Chain"></a>
 </p>
 
 <!-- mcp-name: io.github.sailorpepe/litvm-tcg-oracle -->
@@ -296,12 +296,12 @@ litvm-tcg-oracle
 
 ## On-Chain Contracts
 
-| Contract | Address | Purpose |
-|----------|---------|---------|
-| **MerklePriceOracle** | [View on Explorer](https://liteforge.calderaexplorer.xyz) | Daily Merkle root for 276K products |
-| **TCGPriceOracleV2** | [View on Explorer](https://liteforge.calderaexplorer.xyz) | Hourly TWAP for top 50 blue-chip cards |
+| Contract | Purpose |
+|----------|---------|
+| **MerklePriceOracle** | Daily Merkle root for 276K products |
+| **TCGPriceOracleV2** | Hourly TWAP for top 50 blue-chip cards |
 
-Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
+Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http). Run `oracle_status()` to get live contract addresses and on-chain state, or browse the [Block Explorer](https://liteforge.explorer.caldera.xyz).
 
 ---
 
@@ -322,7 +322,7 @@ Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Ca
 - **Website**: [the-undesirables.com](https://the-undesirables.com)
 - **Oracle API**: [oracle.the-undesirables.com](https://oracle.the-undesirables.com)
 - **LitecoinVM**: [litvm.com](https://litvm.com)
-- **Block Explorer**: [liteforge.calderaexplorer.xyz](https://liteforge.calderaexplorer.xyz)
+- **Block Explorer**: [liteforge.explorer.caldera.xyz](https://liteforge.explorer.caldera.xyz)
 - **X**: [@undesirables_ai](https://x.com/undesirables_ai)
 
 *Built by The Undesirables LLC — the first and only oracle on LitecoinVM.*

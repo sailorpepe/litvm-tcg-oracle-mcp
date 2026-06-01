@@ -18,7 +18,7 @@ logger = logging.getLogger("litvm-tcg-oracle")
 # ── LiteForge Network Configuration ──────────────────────────
 LITEFORGE_RPC = "https://liteforge.rpc.caldera.xyz/http"
 CHAIN_ID = 4441
-BLOCK_EXPLORER = "https://liteforge.calderaexplorer.xyz"
+BLOCK_EXPLORER = "https://liteforge.explorer.caldera.xyz"
 
 # ── Contract Addresses (deployed on LiteForge testnet) ───────
 # These are read from deployment artifacts if available,
