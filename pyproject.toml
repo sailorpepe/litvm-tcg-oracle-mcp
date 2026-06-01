@@ -1,6 +1,6 @@
 [project]
 name = "litvm-tcg-oracle"
-version = "1.0.2"
+version = "1.0.3"
 description = "The first MCP server for the LitecoinVM ecosystem — 433K+ trading card products, on-chain Merkle proofs, and Monte Carlo simulation on LiteForge."
 requires-python = ">=3.10"
 readme = "README.md"
@@ -60,7 +60,7 @@ Repository = "https://github.com/sailorpepe/litvm-tcg-oracle-mcp"
 Documentation = "https://oracle.the-undesirables.com/docs"
 "Bug Tracker" = "https://github.com/sailorpepe/litvm-tcg-oracle-mcp/issues"
 "LitecoinVM" = "https://litvm.com"
-"Block Explorer" = "https://liteforge.calderaexplorer.xyz"
+"Block Explorer" = "https://liteforge.explorer.caldera.xyz"
 
 [project.scripts]
 litvm-tcg-oracle = "litvm_tcg_oracle.server:main"
