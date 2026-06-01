@@ -5,7 +5,7 @@
 <h3 align="center">The first Model Context Protocol server for the LitecoinVM ecosystem.</h3>
 
 <p align="center">
-Give any AI agent access to 433K+ trading card products — with every actively-priced card cryptographically verifiable on-chain.
+Plug any AI agent into 433K+ real trading card prices across 13 games — every price backed by on-chain Merkle proofs, not blind trust.
 </p>
 
 <p align="center">
