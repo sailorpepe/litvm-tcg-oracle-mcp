@@ -4,7 +4,7 @@ version = "1.0.0"
 description = "The first MCP server for the LitecoinVM ecosystem — 432K+ trading card prices, on-chain Merkle proofs, and Monte Carlo simulation on LiteForge."
 requires-python = ">=3.10"
 readme = "README.md"
-license = {text = "BUSL-1.1"}
+license = {file = "LICENSE.md"}
 authors = [
     {name = "The Undesirables LLC", email = "theundesirables7@gmail.com"},
 ]
