@@ -1,0 +1,73 @@
+[project]
+name = "litvm-tcg-oracle"
+version = "1.0.0"
+description = "The first MCP server for the LitecoinVM ecosystem — 432K+ trading card prices, on-chain Merkle proofs, and Monte Carlo simulation on LiteForge."
+requires-python = ">=3.10"
+readme = "README.md"
+license = {text = "BUSL-1.1"}
+authors = [
+    {name = "The Undesirables LLC", email = "theundesirables7@gmail.com"},
+]
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "litecoin",
+    "litecoinvm",
+    "litvm",
+    "liteforge",
+    "oracle",
+    "tcg",
+    "trading-cards",
+    "pokemon",
+    "magic-the-gathering",
+    "defi",
+    "merkle-proof",
+    "monte-carlo",
+    "price-oracle",
+    "zkltc",
+    "blockchain",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Games/Entertainment",
+    "Topic :: Office/Business :: Financial",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "fastmcp>=3.1.0",
+    "requests>=2.28",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+chain = [
+    "web3>=6.0",
+]
+all = [
+    "litvm-tcg-oracle[chain]",
+]
+
+[project.urls]
+Homepage = "https://the-undesirables.com/litvm"
+Repository = "https://github.com/sailorpepe/litvm-tcg-oracle-mcp"
+Documentation = "https://oracle.the-undesirables.com/docs"
+"Bug Tracker" = "https://github.com/sailorpepe/litvm-tcg-oracle-mcp/issues"
+"LitecoinVM" = "https://litvm.com"
+"Block Explorer" = "https://liteforge.calderaexplorer.xyz"
+
+[project.scripts]
+litvm-tcg-oracle = "litvm_tcg_oracle.server:main"
+
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
