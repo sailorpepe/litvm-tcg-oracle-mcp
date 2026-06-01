@@ -1,10 +1,11 @@
 [project]
 name = "litvm-tcg-oracle"
 version = "1.0.0"
-description = "The first MCP server for the LitecoinVM ecosystem — 432K+ trading card prices, on-chain Merkle proofs, and Monte Carlo simulation on LiteForge."
+description = "The first MCP server for the LitecoinVM ecosystem — 433K+ trading card products, on-chain Merkle proofs, and Monte Carlo simulation on LiteForge."
 requires-python = ">=3.10"
 readme = "README.md"
-license = {file = "LICENSE.md"}
+license = "BUSL-1.1"
+license-files = ["LICENSE.md"]
 authors = [
     {name = "The Undesirables LLC", email = "theundesirables7@gmail.com"},
 ]
