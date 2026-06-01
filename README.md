@@ -296,12 +296,12 @@ litvm-tcg-oracle
 
 ## On-Chain Contracts
 
-| Contract | Purpose |
-|----------|---------|
-| **MerklePriceOracle** | Daily Merkle root for 276K products |
-| **TCGPriceOracleV2** | Hourly TWAP for top 50 blue-chip cards |
+| Contract | Address | Purpose |
+|----------|---------|---------|
+| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Daily Merkle root for 276K products |
+| **TCGPriceOracleV2** | [`0xE74860...4B8d0`](https://liteforge.explorer.caldera.xyz/address/0xE74860a658a6e642A449d989BfB6eB845074B8d0) | Hourly TWAP for top 50 blue-chip cards |
 
-Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http). Run `oracle_status()` to get live contract addresses and on-chain state, or browse the [Block Explorer](https://liteforge.explorer.caldera.xyz).
+Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
 
 ---
 
