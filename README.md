@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://the-undesirables.com/litvm-banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
+  <img src="assets/banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
 </p>
 
 <h3 align="center">The first Model Context Protocol server for the LitecoinVM ecosystem.</h3>
@@ -24,6 +24,26 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
 *Browse 433K+ cards with on-chain verified prices*
 
 </div>
+
+---
+
+## 📑 Table of Contents
+
+- [Why This Exists](#why-this-exists)
+- [Data Coverage](#data-coverage)
+- [Quick Start](#quick-start)
+- [Tools](#tools)
+  - [search_cards](#1-search_cards--full-text-search)
+  - [get_price](#2-get_price--price--history)
+  - [get_merkle_proof](#3-get_merkle_proof--on-chain-verification)
+  - [oracle_status](#4-oracle_status--live-on-chain-status)
+  - [simulate_price](#5-simulate_price--monte-carlo-simulation)
+  - [get_market_snapshot](#6-get_market_snapshot--market-overview)
+- [Architecture](#architecture)
+- [Configuration](#configuration)
+- [On-Chain Contracts](#on-chain-contracts)
+- [License & Commercial Use](#-license--commercial-use)
+- [Links](#links)
 
 ---
 
@@ -355,3 +375,13 @@ Building a commercial product? Want guaranteed API access or white-label integra
 - **X**: [@undesirables_ai](https://x.com/undesirables_ai)
 
 *Built by The Undesirables LLC — the first and only oracle on LitecoinVM.*
+
+---
+
+<div align="center">
+
+⭐ **If this project helped you, please star this repo** — it helps others find it.
+
+[Report Bug](../../issues) · [Request Feature](../../issues)
+
+</div>
