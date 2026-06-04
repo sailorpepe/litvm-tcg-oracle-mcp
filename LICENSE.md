@@ -4,7 +4,7 @@
 
 - **Licensor**: The Undesirables LLC
 - **Licensed Work**: LitVM TCG Oracle MCP Server (version 1.0 and later)
-- **Additional Use Grant**: You may use the Licensed Work for non-production purposes, including personal use, research, education, testing, and development. You may also make copies of the Licensed Work available to third parties, provided that each such copy prominently includes this License.
+- **Additional Use Grant**: You may make production use of the Licensed Work, provided Your use does not include offering the Licensed Work to third parties on a hosted or embedded basis as a Competitive Offering. A "Competitive Offering" is a product or service offered to third parties on a paid basis (including through paid support arrangements) that provides TCG market intelligence, pricing aggregation, AI card grading, or on-chain price oracle functionality as a primary feature. If Your product is not a Competitive Offering when You first make it generally available, it will not become a Competitive Offering later due to the Licensor releasing a new version of the Licensed Work with additional capabilities. Products that are not provided on a paid basis are not Competitive Offerings.
 - **Change Date**: June 1, 2030 (four years from the date of this license)
 - **Change License**: MIT License
 
