@@ -17,6 +17,14 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
 
 <!-- mcp-name: io.github.sailorpepe/litvm-tcg-oracle -->
 
+<div align="center">
+
+<img src="assets/demo.gif" alt="LitVM TCG Oracle MCP Demo" width="480" />
+
+*Browse 433K+ cards with on-chain verified prices*
+
+</div>
+
 ---
 
 ## Why This Exists
