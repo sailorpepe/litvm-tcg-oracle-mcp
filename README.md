@@ -305,13 +305,34 @@ Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Ca
 
 ---
 
-## License
+## 📝 License & Commercial Use
 
-[Business Source License 1.1](LICENSE.md)
+This project is licensed under the **[Business Source License 1.1 (BUSL-1.1)](LICENSE.md)**.
 
-- **Use freely** for development, research, and non-competing production use
-- **Cannot** operate a competing price oracle service on LitecoinVM
-- **Converts to MIT** on June 1, 2030
+We build in public and support the developer ecosystem — but we also protect the infrastructure and IP of **The Undesirables LLC**.
+
+### ✅ What You CAN Do (Free)
+
+- **Personal & Educational Use** — Download, modify, and run locally for learning, research, or personal projects.
+- **Non-Competing Applications** — Integrate this MCP server into your app, provided your app does not offer TCG market intelligence, pricing aggregation, AI card grading, or on-chain price oracle services as its primary function.
+- **MCP / Agent Integration** — Connect your AI agent to this server for non-commercial use.
+- **Community Contributions** — Security audits, bug fixes, and PRs are always welcome.
+
+### 🚫 What You CANNOT Do (Use Limitation)
+
+- **Competing Oracle** — You may not use this code to operate a competing price oracle service on LitecoinVM or any compatible chain.
+- **Commercial Resale** — You may not wrap our API, data pipelines, or AI models into a paid service without a commercial license.
+- **Hosted SaaS** — You may not host this software as a service for third parties without written permission.
+
+### 🔓 Open-Source Conversion
+
+On **June 1, 2030** (or 4 years after the first public release of each version), this code automatically converts to the **MIT License** — fully open source, forever.
+
+### 🤝 Commercial Licensing
+
+Building a commercial product? Want guaranteed API access or white-label integration? Contact us:
+
+📧 **theundesirables7@gmail.com** · 🐦 **[@undesirables_ai](https://x.com/undesirables_ai)**
 
 © 2026 The Undesirables LLC
 
