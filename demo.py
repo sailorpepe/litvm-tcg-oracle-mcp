@@ -19,7 +19,7 @@ RPC = "https://liteforge.rpc.caldera.xyz/http"
 
 # Contract addresses (deployed on LiteForge Chain 4441)
 MERKLE_ADDR = "0x96B124f50156589274ADF8F674509374752170Cd"
-V2_ADDR = "0xE74860a658a6e642A449d989BfB6eB845074B8d0"
+V2_ADDR = "0x04a128F4a7A0588D259F8abe9E260BbffF203072"
 
 MERKLE_ABI = json.loads("""[
     {"inputs":[],"name":"merkleRoot","outputs":[{"type":"bytes32"}],"stateMutability":"view","type":"function"},
