@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
+  <img src="assets/banner.png" alt="Mantle TCG Oracle — MCP Server" width="100%">
 </p>
 
-<h3 align="center">The first Model Context Protocol server for the LitecoinVM ecosystem.</h3>
+<h3 align="center">The first Model Context Protocol server for the Mantle ecosystem.</h3>
 
 <p align="center">
 Plug any AI agent into 433K+ real trading card prices across 13 games — every price backed by on-chain Merkle proofs, not blind trust.
@@ -12,14 +12,14 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
   <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/pypi/v/litvm-tcg-oracle?color=%230052FF&label=PyPI&logo=pypi&logoColor=white" alt="PyPI"></a>&nbsp;
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">&nbsp;
   <a href="https://github.com/sailorpepe/litvm-tcg-oracle-mcp/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/License-BUSL--1.1-blue.svg" alt="License"></a>&nbsp;
-  <a href="https://liteforge.explorer.caldera.xyz"><img src="https://img.shields.io/badge/LiteForge-Chain%204441-silver.svg" alt="Chain"></a>
+  <a href="https://explorer.mantle.xyz"><img src="https://img.shields.io/badge/Mantle Network-Chain%204441-silver.svg" alt="Chain"></a>
 </p>
 
 <!-- mcp-name: io.github.sailorpepe/litvm-tcg-oracle -->
 
 <div align="center">
 
-<img src="assets/demo.gif" alt="LitVM TCG Oracle MCP Demo" width="480" />
+<img src="assets/demo.gif" alt="Mantle TCG Oracle MCP Demo" width="480" />
 
 *Browse 433K+ cards with on-chain verified prices*
 
@@ -37,7 +37,7 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
   - [get_price](#2-get_price--price--history)
   - [get_merkle_proof](#3-get_merkle_proof--on-chain-verification)
   - [oracle_status](#4-oracle_status--live-on-chain-status)
-  - [simulate_price](#5-simulate_price--monte-carlo-simulation)
+  - [simulate_price](#5-simulate_price--risk-forecast)
   - [get_market_snapshot](#6-get_market_snapshot--market-overview)
 - [Architecture](#architecture)
 - [Configuration](#configuration)
@@ -53,7 +53,7 @@ AI agents are making decisions with market data — but how do they know the dat
 
 Regular APIs require **trust**. You call an endpoint, you get a number, and you hope it's accurate. There's no way to verify it. For AI agents managing portfolios, executing trades, or assessing collateral, this is a problem.
 
-**This MCP server solves it.** Every actively-priced product in the oracle is committed to a Merkle root on-chain daily. Any agent can request a Merkle proof for any card and independently verify the price against the LitecoinVM blockchain — no trust required.
+**This MCP server solves it.** Every actively-priced product in the oracle is committed to a Merkle root on-chain daily. Any agent can request a Merkle proof for any card and independently verify the price against the Mantle blockchain — no trust required.
 
 ### What Makes This Different
 
@@ -61,10 +61,10 @@ Regular APIs require **trust**. You call an endpoint, you get a number, and you 
 |---------|------------------|-----------------|
 | **Data source** | Opaque server | 13.5M+ verified market observations |
 | **Verification** | Trust the server | Merkle proof → on-chain verification |
-| **Simulation** | None | Monte Carlo with calibrated parameters |
+| **Forecasting** | None | Calibrated conformal risk forecast — honest VaR |
 | **Coverage** | Limited | 433K products, 276K actively priced |
 | **For AI agents** | Manual integration | MCP — works in Claude, GPT, Cursor |
-| **Blockchain** | None | LitecoinVM (LiteForge, Chain 4441) |
+| **Blockchain** | None | Mantle Network |
 
 ---
 
@@ -151,23 +151,23 @@ Get current market price and daily price history for any card.
 → get_price(card_name="Charizard Base Set Holo", days=90)
 ```
 
-Returns market price, low (buy-it-now) price, and a daily price array. This history is what powers the Monte Carlo calibration — the same data the simulation engine uses to calculate drift and volatility.
+Returns market price, low (buy-it-now) price, and a daily price array. This history is what powers the risk-forecast calibration — the same data the forecast engine uses to calculate drift, volatility, and conformal bands.
 
 ---
 
 ### 3. `get_merkle_proof` — On-Chain Verification
 
-**This is the key differentiator.** Get a cryptographic proof that a card's price was committed to the LitecoinVM blockchain.
+**This is the key differentiator.** Get a cryptographic proof that a card's price was committed to the Mantle blockchain.
 
 ```
 → get_merkle_proof(product_id=84198)
 ```
 
-Returns a `bytes32[]` proof array (19 hashes for the current tree) that can be submitted to the `MerklePriceOracle` contract on LiteForge to verify the price without trusting any server.
+Returns a `bytes32[]` proof array (19 hashes for the current tree) that can be submitted to the `MerklePriceOracle` contract on Mantle Network to verify the price without trusting any server.
 
 **Verification flow:**
 1. Call `get_merkle_proof(product_id)` → receive proof + leaf data
-2. Submit to `MerklePriceOracle.verifyPrice()` on LiteForge (Chain 4441)
+2. Submit to `MerklePriceOracle.verifyPrice()` on Mantle Network
 3. Contract checks the leaf against the committed Merkle root
 4. Returns `true` if and only if the price matches exactly
 
@@ -186,7 +186,7 @@ Standard: OpenZeppelin MerkleProof (double-hash, sorted pairs)
 
 ### 4. `oracle_status` — Live On-Chain Status
 
-Reads directly from the LiteForge blockchain via Caldera RPC — not cached data.
+Reads directly from the Mantle Network blockchain via Caldera RPC — not cached data.
 
 ```
 → oracle_status()
@@ -199,12 +199,12 @@ Returns:
 
 ---
 
-### 5. `simulate_price` — Monte Carlo Simulation
+### 5. `simulate_price` — Risk Forecast
 
 Stochastic price simulations calibrated from real market data.
 
 ```
-→ simulate_price(card_name="Charizard Base Set", days=90, model="merton")
+→ simulate_price(card_name="Charizard Base Set", days=30)   # conformal default — pass model="merton" for Monte Carlo
 ```
 
 #### How the Simulation Works
@@ -227,13 +227,16 @@ Card name → FTS5 search → product_id → price_history (up to 365 days)
 
 **Models:**
 
+**Regime-aware conformal calibration (default)**
+Distribution-free bands calibrated on real cross-card price history. Produces *honest* VaR — out-of-sample, a "5% loss" happens about 5% of the time — with no Monte Carlo and fully deterministic output anyone can reproduce. Each card also gets two letter grades: **Safe-Hold** (downside) and **Momentum** (direction). The Monte Carlo models below are opt-in via `model=`.
+
 **Geometric Brownian Motion (GBM)**
 ```
 dS = μ·S·dt + σ·S·dW
 ```
 Standard log-normal diffusion — the foundation of Black-Scholes option pricing. Assumes continuous price movements with no sudden jumps.
 
-**Merton Jump-Diffusion (default)**
+**Merton Jump-Diffusion** (opt-in)
 ```
 dS = (μ − λk)·S·dt + σ·S·dW + J·S·dN
 ```
@@ -291,8 +294,8 @@ Top cards by value for any game.
                                                      │       │
                                                      ▼       ▼
                                      ┌──────────────────┐  ┌─────────────┐
-                                     │  Oracle REST API │  │  LiteForge  │
-                                     │  (Mac Mini)      │  │  Chain 4441 │
+                                     │  Oracle REST API │  │  Mantle Network  │
+                                     │  (Mac Mini)      │  │  Mantle Network │
                                      │                  │  │             │
                                      │  433K products   │  │  Merkle +   │
                                      │  13.5M prices    │  │  V2 Oracle  │
@@ -301,7 +304,7 @@ Top cards by value for any game.
 ```
 
 **Off-chain layer** (REST API): Search, prices, market data, simulation calibration  
-**On-chain layer** (LiteForge RPC): Merkle root verification, oracle contract status, TWAP feeds
+**On-chain layer** (Mantle Network RPC): Merkle root verification, oracle contract status, TWAP feeds
 
 The Mac Mini runs the daily pipeline (scrape → price update → Merkle root → on-chain push) and serves the REST API. The MCP server is a thin client that any developer can `pip install` and connect to Claude, GPT, or Cursor.
 
@@ -326,10 +329,10 @@ litvm-tcg-oracle
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Daily Merkle root for 276K products |
-| **TCGPriceOracleV2** | [`0x04a128...203072`](https://liteforge.explorer.caldera.xyz/address/0x04a128F4a7A0588D259F8abe9E260BbffF203072) | Hourly TWAP for top 50 blue-chip cards |
+| **MerklePriceOracle** | [`0x96B124...170Cd`](https://explorer.mantle.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Daily Merkle root for 276K products |
+| **TCGPriceOracleV2** | [`0x04a128...203072`](https://explorer.mantle.xyz/address/0x04a128F4a7A0588D259F8abe9E260BbffF203072) | Hourly TWAP for top 50 blue-chip cards |
 
-Both contracts are deployed on **LiteForge Testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
+Both contracts are deployed on **Mantle Testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
 
 ---
 
@@ -348,7 +351,7 @@ We build in public and support the developer ecosystem — but we also protect t
 
 ### 🚫 What You CANNOT Do (Use Limitation)
 
-- **Competing Oracle** — You may not use this code to operate a competing price oracle service on LitecoinVM or any compatible chain.
+- **Competing Oracle** — You may not use this code to operate a competing price oracle service on Mantle Network or any compatible chain.
 - **Commercial Resale** — You may not wrap our API, data pipelines, or AI models into a paid service without a commercial license.
 - **Hosted SaaS** — You may not host this software as a service for third parties without written permission.
 
@@ -370,11 +373,11 @@ Building a commercial product? Want guaranteed API access or white-label integra
 
 - **Website**: [the-undesirables.com](https://the-undesirables.com)
 - **Oracle API**: [oracle.the-undesirables.com](https://oracle.the-undesirables.com)
-- **LitecoinVM**: [litvm.com](https://litvm.com)
-- **Block Explorer**: [liteforge.explorer.caldera.xyz](https://liteforge.explorer.caldera.xyz)
+- **Mantle Network**: [mantle.xyz](https://mantle.xyz)
+- **Block Explorer**: [explorer.mantle.xyz](https://explorer.mantle.xyz)
 - **X**: [@undesirables_ai](https://x.com/undesirables_ai)
 
-*Built by The Undesirables LLC — the first and only oracle on LitecoinVM.*
+*Built by The Undesirables LLC — the first and only oracle on Mantle Network.*
 
 ---
 
