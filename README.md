@@ -330,7 +330,7 @@ litvm-tcg-oracle
 | Contract | Address | Purpose |
 |----------|---------|---------|
 | **MerklePriceOracle** | [`0x96B124...170Cd`](https://explorer.mantle.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Daily Merkle root for 276K products |
-| **TCGPriceOracleV2** | [`0x04a128...203072`](https://explorer.mantle.xyz/address/0x04a128F4a7A0588D259F8abe9E260BbffF203072) | Hourly TWAP for top 50 blue-chip cards |
+| **TCGPriceOracleV2** | [`0x04a128...203072`](https://explorer.mantle.xyz/address/0x697bF6AE96fb05a47106abd012C39855A16a720E) | Hourly TWAP for top 50 blue-chip cards |
 
 Both contracts are deployed on **Mantle Testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
 
