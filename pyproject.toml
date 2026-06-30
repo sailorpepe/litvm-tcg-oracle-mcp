@@ -1,7 +1,7 @@
 [project]
 name = "litvm-tcg-oracle"
-version = "1.0.3"
-description = "The first MCP server for the LitecoinVM ecosystem — 433K+ trading card products, on-chain Merkle proofs, and Monte Carlo simulation on LiteForge."
+version = "1.0.4"
+description = "The first MCP server for the LitecoinVM ecosystem — 433K+ trading card products, on-chain Merkle proofs, calibrated conformal risk forecasts (honest VaR + Safe-Hold/Momentum grades), and Monte Carlo simulation on LiteForge."
 requires-python = ">=3.10"
 readme = "README.md"
 license = {text = "BUSL-1.1"}

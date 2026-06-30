@@ -11,6 +11,7 @@ Verified Endpoints (as deployed on Mac Mini):
   GET /api/v1/market       → Market snapshot by game (free)
   GET /api/v1/merkle/proof → Merkle proof for product (free)
   GET /api/v1/price        → Card price + history (free)
+  GET /api/v1/forecast/{id}→ Conformal risk forecast + grades (free)
 """
 
 import logging
@@ -152,6 +153,22 @@ class OracleClient:
         """
         params: dict[str, Any] = {"game": game, "limit": min(limit, 50)}
         return self._get("/api/v1/market", params)
+
+    def forecast(self, product_id: int) -> dict:
+        """Get the calibrated conformal risk forecast for a card (free).
+
+        Calls the free /api/v1/forecast/{product_id} endpoint and returns
+        the agent-complete JSON: conformal 30-day forecast with honest VaR,
+        Safe-Hold and Momentum letter grades, regime, expected move,
+        probability up, percentile bands, and a plain-English read.
+
+        Args:
+            product_id: TCGPlayer product ID
+
+        Returns:
+            Per-card conformal forecast dict (momentum is "NA" on a drift spike).
+        """
+        return self._get(f"/api/v1/forecast/{product_id}")
 
     def merkle_proof(self, product_id: int) -> dict:
         """Get Merkle proof for on-chain price verification.
