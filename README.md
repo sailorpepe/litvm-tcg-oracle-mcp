@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
+  <img src="https://raw.githubusercontent.com/sailorpepe/litvm-tcg-oracle-mcp/main/assets/banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
 </p>
 
 <h3 align="center">The first Model Context Protocol server for the LitecoinVM (LitVM) ecosystem.</h3>
@@ -20,7 +20,7 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
 
 <div align="center">
 
-<img src="assets/demo.gif" alt="LitVM TCG Oracle MCP Demo" width="480" />
+<img src="https://raw.githubusercontent.com/sailorpepe/litvm-tcg-oracle-mcp/main/assets/demo.gif" alt="LitVM TCG Oracle MCP Demo" width="480" />
 
 *Browse 433K+ cards with on-chain verified prices*
 
@@ -353,7 +353,7 @@ Both contracts are deployed on **LitVM LiteForge testnet** (Chain ID 4441) via t
 
 ## 📝 License & Commercial Use
 
-This project is licensed under the **[Business Source License 1.1 (BUSL-1.1)](LICENSE.md)**.
+This project is licensed under the **[Business Source License 1.1 (BUSL-1.1)](https://github.com/sailorpepe/litvm-tcg-oracle-mcp/blob/main/LICENSE.md)**.
 
 We build in public and support the developer ecosystem — but we also protect the infrastructure and IP of **The Undesirables LLC**.
 
