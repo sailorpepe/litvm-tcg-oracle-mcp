@@ -38,8 +38,9 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
   - [get_price](#2-get_price--price--history)
   - [get_merkle_proof](#3-get_merkle_proof--on-chain-verification)
   - [oracle_status](#4-oracle_status--live-on-chain-status)
-  - [simulate_price](#5-simulate_price--risk-forecast)
-  - [get_market_snapshot](#6-get_market_snapshot--market-overview)
+  - [get_forecast](#5-get_forecast--conformal-risk-forecast)
+  - [simulate_price](#6-simulate_price--monte-carlo-simulation)
+  - [get_market_snapshot](#7-get_market_snapshot--market-overview)
 - [Architecture](#architecture)
 - [Configuration](#configuration)
 - [On-Chain Contracts](#on-chain-contracts)
@@ -200,12 +201,26 @@ Returns:
 
 ---
 
-### 5. `simulate_price` — Risk Forecast
+### 5. `get_forecast` — Conformal Risk Forecast
 
-Stochastic price simulations calibrated from real market data.
+The recommended, honest default forecast. Distribution-free, deterministic, never-under-protective — calibrated on real cross-card price history, no distributional assumption.
 
 ```
-→ simulate_price(card_name="Charizard Base Set", days=30)   # conformal default — pass model="merton" for Monte Carlo
+→ get_forecast(card_name="Charizard Base Set Holo")
+```
+
+Returns the agent-complete forecast: `price`, `as_of`, `regime`, point estimate, expected 30-day move, `prob_up`, 50%/90% bands, VaR 95/99, a **Safe-Hold** grade (downside / capital preservation), a **Momentum** grade (direction — or `"NA"` on a recent drift spike), and a one-line `plain_english` read.
+
+**Why conformal?** Honest VaR: out-of-sample, a "5% VaR" means a ~5% loss happens about 5% of the time. No Monte Carlo, fully deterministic, anyone can reproduce it. Calls the free `/api/v1/forecast/{product_id}` endpoint.
+
+---
+
+### 6. `simulate_price` — Monte Carlo Simulation
+
+An opt-in stochastic view — Monte Carlo price paths (Merton/GBM) calibrated from real market data. Use `get_forecast` for the honest default.
+
+```
+→ simulate_price(card_name="Charizard Base Set", days=30, model="merton")
 ```
 
 #### How the Simulation Works
@@ -226,10 +241,9 @@ Card name → FTS5 search → product_id → price_history (up to 365 days)
 
 **Why weekly resampling?** Daily TCG prices have irregular gaps (weekends, holidays, no sales). Weekly resampling produces stable drift estimates by collapsing daily observations into ISO-week buckets and computing log-returns between weekly closing prices. This eliminates the √Δt scaling problem that plagues irregularly-spaced data.
 
-**Models:**
+**Models** (pass via `model=`, default `merton`):
 
-**Regime-aware conformal calibration (default)**
-Distribution-free bands calibrated on real cross-card price history. Produces *honest* VaR — out-of-sample, a "5% loss" happens about 5% of the time — with no Monte Carlo and fully deterministic output anyone can reproduce. Each card also gets two letter grades: **Safe-Hold** (downside) and **Momentum** (direction). The Monte Carlo models below are opt-in via `model=`.
+> For the calibrated conformal forecast (honest VaR + Safe-Hold/Momentum grades), use [`get_forecast`](#5-get_forecast--conformal-risk-forecast) above. The two models below are the stochastic Monte Carlo alternatives.
 
 **Geometric Brownian Motion (GBM)**
 ```
@@ -237,7 +251,7 @@ dS = μ·S·dt + σ·S·dW
 ```
 Standard log-normal diffusion — the foundation of Black-Scholes option pricing. Assumes continuous price movements with no sudden jumps.
 
-**Merton Jump-Diffusion** (opt-in)
+**Merton Jump-Diffusion** (default)
 ```
 dS = (μ − λk)·S·dt + σ·S·dW + J·S·dN
 ```

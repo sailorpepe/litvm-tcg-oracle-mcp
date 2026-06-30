@@ -7,7 +7,8 @@ The first Model Context Protocol server for the LitecoinVM ecosystem.
 Provides AI agents with direct access to:
   • 432,000+ trading card prices across 13 games
   • On-chain Merkle proof verification on LiteForge (Chain ID 4441)
-  • Monte Carlo price simulation with calibrated market parameters
+  • Calibrated conformal risk forecasts — honest VaR + Safe-Hold/Momentum grades
+  • Provably-fair Monte Carlo price simulation (Merton/GBM, opt-in)
   • Live oracle contract status via Caldera RPC
 
 Architecture:
@@ -71,9 +72,13 @@ mcp = FastMCP(
     instructions=(
         "TCG Price Oracle for the LitecoinVM ecosystem. "
         "Search 433K+ trading card products (276K actively priced) across 13 games, "
-        "get real-time market prices, verify prices on-chain via Merkle proofs on "
-        "LiteForge (Chain ID 4441), and run Monte Carlo price simulations calibrated "
-        "from 13.5M+ real price observations. "
+        "get real-time market prices, pull a calibrated conformal risk forecast for "
+        "any card — honest VaR with Safe-Hold and Momentum letter grades — verify "
+        "prices on-chain via Merkle proofs on LiteForge (Chain ID 4441), and run "
+        "provably-fair Monte Carlo simulations (Merton/GBM) calibrated from 13.5M+ "
+        "real price observations. "
+        "Default forecasting is conformal (distribution-free, deterministic, honest "
+        "VaR); Monte Carlo is an opt-in stochastic view. "
         "All actively-priced products are cryptographically committed to a daily "
         "Merkle root on the LitecoinVM blockchain — every price can be independently "
         "verified on-chain without trusting this server. "
@@ -328,8 +333,48 @@ def oracle_status() -> str:
 
 
 # ═══════════════════════════════════════════════════════════════
-# TOOL 5: simulate_price
+# TOOL 5: get_forecast (conformal — honest default)  ·  TOOL 6: simulate_price (Monte Carlo, opt-in)
 # ═══════════════════════════════════════════════════════════════
+
+@mcp.tool()
+def get_forecast(card_name: str) -> str:
+    """Get the calibrated conformal risk forecast for a trading card.
+
+    This is the recommended, honest default forecast — distribution-free,
+    deterministic, and never-under-protective. Unlike a Monte Carlo
+    simulation it makes NO distributional assumption: the bands are
+    calibrated on real cross-card price history, so the stated risk is
+    honest out-of-sample (a "5% VaR" means a ~5% loss happens about 5%
+    of the time). Each card also gets two plain-English letter grades.
+
+    Returns the agent-complete forecast:
+      • price, as_of, regime (calm / normal / jumpy)
+      • point estimate, expected 30-day move (move_pct), prob_up
+      • 50% / 90% bands, VaR 95 / 99
+      • safe_hold grade (A+..F — downside / capital preservation)
+      • momentum grade (A+..F, or "NA" on a recent drift spike)
+      • plain_english — a one-line human read
+
+    For an opt-in stochastic Monte Carlo view (Merton/GBM), use
+    simulate_price instead.
+
+    Args:
+        card_name: Card to forecast (e.g. "Charizard Base Set Holo")
+    """
+    card = client.resolve_card(card_name)
+    if not card:
+        return json.dumps({"error": f"No card found matching '{card_name}'"})
+
+    normalized = _normalize_card(card)
+    product_id = normalized.get("product_id")
+    if not product_id:
+        return json.dumps({
+            "error": f"No product_id resolved for '{card_name}'",
+            "card": normalized,
+        })
+
+    return json.dumps(client.forecast(product_id), indent=2)
+
 
 @mcp.tool()
 def simulate_price(
@@ -338,7 +383,11 @@ def simulate_price(
     model: str = "merton",
     simulations: int = 10000,
 ) -> str:
-    """Run Monte Carlo price simulation for a trading card.
+    """Run a Monte Carlo price simulation for a trading card (opt-in).
+
+    For the honest DEFAULT forecast — conformal VaR + Safe-Hold/Momentum
+    grades — use get_forecast. This tool is the stochastic Monte Carlo
+    alternative (Merton/GBM).
 
     HOW THE MATH WORKS:
     This is NOT fake data. The simulation calibrates parameters from REAL
