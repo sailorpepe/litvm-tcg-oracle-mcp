@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/banner.png" alt="Mantle TCG Oracle — MCP Server" width="100%">
+  <img src="assets/banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
 </p>
 
-<h3 align="center">The first Model Context Protocol server for the Mantle ecosystem.</h3>
+<h3 align="center">The first Model Context Protocol server for the LitecoinVM (LitVM) ecosystem.</h3>
 
 <p align="center">
 Plug any AI agent into 433K+ real trading card prices across 13 games — every price backed by on-chain Merkle proofs, not blind trust.
@@ -12,7 +12,7 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
   <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/pypi/v/litvm-tcg-oracle?color=%230052FF&label=PyPI&logo=pypi&logoColor=white" alt="PyPI"></a>&nbsp;
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">&nbsp;
   <a href="https://github.com/sailorpepe/litvm-tcg-oracle-mcp/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/License-BUSL--1.1-blue.svg" alt="License"></a>&nbsp;
-  <a href="https://explorer.mantle.xyz"><img src="https://img.shields.io/badge/Mantle Network-Chain%204441-silver.svg" alt="Chain"></a>&nbsp;
+  <a href="https://liteforge.explorer.caldera.xyz"><img src="https://img.shields.io/badge/LitVM LiteForge-Chain%204441-silver.svg" alt="Chain"></a>&nbsp;
   <a href="https://glama.ai/mcp/servers/sailorpepe/litvm-tcg-oracle-mcp"><img src="https://glama.ai/mcp/servers/sailorpepe/litvm-tcg-oracle-mcp/badges/score.svg" alt="Glama quality score"></a>
 </p>
 
@@ -20,7 +20,7 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
 
 <div align="center">
 
-<img src="assets/demo.gif" alt="Mantle TCG Oracle MCP Demo" width="480" />
+<img src="assets/demo.gif" alt="LitVM TCG Oracle MCP Demo" width="480" />
 
 *Browse 433K+ cards with on-chain verified prices*
 
@@ -55,7 +55,7 @@ AI agents are making decisions with market data — but how do they know the dat
 
 Regular APIs require **trust**. You call an endpoint, you get a number, and you hope it's accurate. There's no way to verify it. For AI agents managing portfolios, executing trades, or assessing collateral, this is a problem.
 
-**This MCP server solves it.** Every actively-priced product in the oracle is committed to a Merkle root on-chain daily. Any agent can request a Merkle proof for any card and independently verify the price against the Mantle blockchain — no trust required.
+**This MCP server solves it.** Every actively-priced product in the oracle is committed to a Merkle root on-chain daily. Any agent can request a Merkle proof for any card and independently verify the price against the LitVM LiteForge blockchain — no trust required.
 
 ### What Makes This Different
 
@@ -66,7 +66,7 @@ Regular APIs require **trust**. You call an endpoint, you get a number, and you 
 | **Forecasting** | None | Calibrated conformal risk forecast — honest VaR |
 | **Coverage** | Limited | 433K products, 276K actively priced |
 | **For AI agents** | Manual integration | MCP — works in Claude, GPT, Cursor |
-| **Blockchain** | None | Mantle Network |
+| **Blockchain** | None | LitVM LiteForge |
 
 ---
 
@@ -159,17 +159,17 @@ Returns market price, low (buy-it-now) price, and a daily price array. This hist
 
 ### 3. `get_merkle_proof` — On-Chain Verification
 
-**This is the key differentiator.** Get a cryptographic proof that a card's price was committed to the Mantle blockchain.
+**This is the key differentiator.** Get a cryptographic proof that a card's price was committed to the LitVM LiteForge blockchain.
 
 ```
 → get_merkle_proof(product_id=84198)
 ```
 
-Returns a `bytes32[]` proof array (19 hashes for the current tree) that can be submitted to the `MerklePriceOracle` contract on Mantle Network to verify the price without trusting any server.
+Returns a `bytes32[]` proof array (19 hashes for the current tree) that can be submitted to the `MerklePriceOracle` contract on LitVM LiteForge to verify the price without trusting any server.
 
 **Verification flow:**
 1. Call `get_merkle_proof(product_id)` → receive proof + leaf data
-2. Submit to `MerklePriceOracle.verifyPrice()` on Mantle Network
+2. Submit to `MerklePriceOracle.verifyPrice()` on LitVM LiteForge
 3. Contract checks the leaf against the committed Merkle root
 4. Returns `true` if and only if the price matches exactly
 
@@ -188,7 +188,7 @@ Standard: OpenZeppelin MerkleProof (double-hash, sorted pairs)
 
 ### 4. `oracle_status` — Live On-Chain Status
 
-Reads directly from the Mantle Network blockchain via Caldera RPC — not cached data.
+Reads directly from the LitVM LiteForge blockchain via Caldera RPC — not cached data.
 
 ```
 → oracle_status()
@@ -309,8 +309,8 @@ Top cards by value for any game.
                                                      │       │
                                                      ▼       ▼
                                      ┌──────────────────┐  ┌─────────────┐
-                                     │  Oracle REST API │  │  Mantle Network  │
-                                     │  (Mac Mini)      │  │  Mantle Network │
+                                     │  Oracle REST API │  │  LitVM LiteForge  │
+                                     │  (Mac Mini)      │  │  LitVM LiteForge │
                                      │                  │  │             │
                                      │  433K products   │  │  Merkle +   │
                                      │  13.5M prices    │  │  V2 Oracle  │
@@ -319,7 +319,7 @@ Top cards by value for any game.
 ```
 
 **Off-chain layer** (REST API): Search, prices, market data, simulation calibration  
-**On-chain layer** (Mantle Network RPC): Merkle root verification, oracle contract status, TWAP feeds
+**On-chain layer** (LitVM LiteForge RPC): Merkle root verification, oracle contract status, TWAP feeds
 
 The Mac Mini runs the daily pipeline (scrape → price update → Merkle root → on-chain push) and serves the REST API. The MCP server is a thin client that any developer can `pip install` and connect to Claude, GPT, or Cursor.
 
@@ -344,10 +344,10 @@ litvm-tcg-oracle
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **MerklePriceOracle** | [`0x96B124...170Cd`](https://explorer.mantle.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Daily Merkle root for 276K products |
-| **TCGPriceOracleV2** | [`0x04a128...203072`](https://explorer.mantle.xyz/address/0x697bF6AE96fb05a47106abd012C39855A16a720E) | Hourly TWAP for top 50 blue-chip cards |
+| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Daily Merkle root for 276K products |
+| **TCGPriceOracleV2** | [`0x697bF6...720E`](https://liteforge.explorer.caldera.xyz/address/0x697bF6AE96fb05a47106abd012C39855A16a720E) | Hourly TWAP for top 50 blue-chip cards |
 
-Both contracts are deployed on **Mantle Testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
+Both contracts are deployed on **LitVM LiteForge testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
 
 ---
 
@@ -366,7 +366,7 @@ We build in public and support the developer ecosystem — but we also protect t
 
 ### 🚫 What You CANNOT Do (Use Limitation)
 
-- **Competing Oracle** — You may not use this code to operate a competing price oracle service on Mantle Network or any compatible chain.
+- **Competing Oracle** — You may not use this code to operate a competing price oracle service on LitVM LiteForge or any compatible chain.
 - **Commercial Resale** — You may not wrap our API, data pipelines, or AI models into a paid service without a commercial license.
 - **Hosted SaaS** — You may not host this software as a service for third parties without written permission.
 
@@ -388,11 +388,11 @@ Building a commercial product? Want guaranteed API access or white-label integra
 
 - **Website**: [the-undesirables.com](https://the-undesirables.com)
 - **Oracle API**: [oracle.the-undesirables.com](https://oracle.the-undesirables.com)
-- **Mantle Network**: [mantle.xyz](https://mantle.xyz)
-- **Block Explorer**: [explorer.mantle.xyz](https://explorer.mantle.xyz)
+- **LitVM LiteForge**: [liteforge.explorer.caldera.xyz](https://liteforge.explorer.caldera.xyz)
+- **Block Explorer**: [liteforge.explorer.caldera.xyz](https://liteforge.explorer.caldera.xyz)
 - **X**: [@undesirables_ai](https://x.com/undesirables_ai)
 
-*Built by The Undesirables LLC — the first and only oracle on Mantle Network.*
+*Built by The Undesirables LLC — the first and only oracle on LitVM LiteForge.*
 
 ---
 
