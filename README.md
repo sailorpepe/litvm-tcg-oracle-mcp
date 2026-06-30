@@ -12,7 +12,8 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
   <a href="https://pypi.org/project/litvm-tcg-oracle/"><img src="https://img.shields.io/pypi/v/litvm-tcg-oracle?color=%230052FF&label=PyPI&logo=pypi&logoColor=white" alt="PyPI"></a>&nbsp;
   <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white" alt="Python">&nbsp;
   <a href="https://github.com/sailorpepe/litvm-tcg-oracle-mcp/blob/main/LICENSE.md"><img src="https://img.shields.io/badge/License-BUSL--1.1-blue.svg" alt="License"></a>&nbsp;
-  <a href="https://explorer.mantle.xyz"><img src="https://img.shields.io/badge/Mantle Network-Chain%204441-silver.svg" alt="Chain"></a>
+  <a href="https://explorer.mantle.xyz"><img src="https://img.shields.io/badge/Mantle Network-Chain%204441-silver.svg" alt="Chain"></a>&nbsp;
+  <a href="https://glama.ai/mcp/servers/sailorpepe/litvm-tcg-oracle-mcp"><img src="https://glama.ai/mcp/servers/sailorpepe/litvm-tcg-oracle-mcp/badges/score.svg" alt="Glama quality score"></a>
 </p>
 
 <!-- mcp-name: io.github.sailorpepe/litvm-tcg-oracle -->
