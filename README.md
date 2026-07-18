@@ -5,7 +5,7 @@
 <h3 align="center">The first Model Context Protocol server for the LitecoinVM (LitVM) ecosystem.</h3>
 
 <p align="center">
-Plug any AI agent into 433K+ real trading card prices across 13 games — every price backed by on-chain Merkle proofs, not blind trust.
+Plug any AI agent into 446K+ real trading card prices across 25+ games — every price backed by on-chain Merkle proofs, not blind trust.
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@ Plug any AI agent into 433K+ real trading card prices across 13 games — every 
 
 <img src="https://raw.githubusercontent.com/sailorpepe/litvm-tcg-oracle-mcp/main/assets/demo.gif" alt="LitVM TCG Oracle MCP Demo" width="480" />
 
-*Browse 433K+ cards with on-chain verified prices*
+*Browse 446K+ cards with on-chain verified prices*
 
 </div>
 
@@ -55,7 +55,7 @@ AI agents are making decisions with market data — but how do they know the dat
 
 Regular APIs require **trust**. You call an endpoint, you get a number, and you hope it's accurate. There's no way to verify it. For AI agents managing portfolios, executing trades, or assessing collateral, this is a problem.
 
-**This MCP server solves it.** Every actively-priced product in the oracle is committed to a Merkle root on-chain daily. Any agent can request a Merkle proof for any card and independently verify the price against the LitVM LiteForge blockchain — no trust required.
+**This MCP server solves it.** Every actively-priced product in the oracle is committed to a Merkle root on-chain hourly. Any agent can request a Merkle proof for any card and independently verify the price against the LitVM LiteForge blockchain — no trust required.
 
 ### What Makes This Different
 
@@ -64,7 +64,7 @@ Regular APIs require **trust**. You call an endpoint, you get a number, and you 
 | **Data source** | Opaque server | 13.5M+ verified market observations |
 | **Verification** | Trust the server | Merkle proof → on-chain verification |
 | **Forecasting** | None | Calibrated conformal risk forecast — honest VaR |
-| **Coverage** | Limited | 433K products, 276K actively priced |
+| **Coverage** | Limited | 446K products, 284K actively priced |
 | **For AI agents** | Manual integration | MCP — works in Claude, GPT, Cursor |
 | **Blockchain** | None | LitVM LiteForge |
 
@@ -133,7 +133,7 @@ Then ask your AI: *"Search for Charizard Base Set and simulate the price over 90
 
 ### 1. `search_cards` — Full-Text Search
 
-Search the full 433K product catalog using FTS5 full-text search.
+Search the full 446K product catalog using FTS5 full-text search.
 
 ```
 → search_cards(query="black lotus", game="Magic", limit=5)
@@ -182,7 +182,7 @@ keccak256(bytes.concat(keccak256(abi.encode(
 
 Standard: OpenZeppelin MerkleProof (double-hash, sorted pairs)
 
-> Only the 276K actively-priced products are in the Merkle tree. Zero-price catalog entries return a `404` — this is correct behavior.
+> Only the 284K actively-priced products are in the Merkle tree. Zero-price catalog entries return a `404` — this is correct behavior.
 
 ---
 
