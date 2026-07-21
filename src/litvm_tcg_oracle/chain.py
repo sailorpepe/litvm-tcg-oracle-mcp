@@ -6,7 +6,7 @@ Caldera RPC endpoint. No private key needed — read-only calls.
 
 Contracts:
   - TCGPriceOracleV2: Live TWAP price feeds for top 50 blue-chip cards
-  - MerklePriceOracle: Single Merkle root committing 432K+ product prices
+  - MerklePriceOracle: Single Merkle root committing 446K+ product prices
 """
 
 import json
@@ -193,7 +193,7 @@ def _get_oracle_status_fallback() -> dict:
         "contracts": {
             "merkle_oracle": {
                 "address": addresses.get("merkle", "Unknown — deploy artifacts not found"),
-                "description": "Single Merkle root committing 432K+ product prices daily",
+                "description": "Single Merkle root committing 446K+ product prices daily",
             },
             "v2_oracle": {
                 "address": addresses.get("v2", "Unknown — deploy artifacts not found"),

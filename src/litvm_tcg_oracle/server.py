@@ -5,7 +5,7 @@ LitVM TCG Oracle — MCP Server
 The first Model Context Protocol server for the LitecoinVM ecosystem.
 
 Provides AI agents with direct access to:
-  • 432,000+ trading card prices across 13 games
+  • 446,000+ trading card prices across 25+ games
   • On-chain Merkle proof verification on LiteForge (Chain ID 4441)
   • Calibrated conformal risk forecasts — honest VaR + Safe-Hold/Momentum grades
   • Provably-fair Monte Carlo price simulation (Merton/GBM, opt-in)
@@ -23,8 +23,8 @@ Architecture:
          ▼                                   ▼
   ┌──────────────┐                ┌──────────────────────┐
   │  LiteForge   │                │  SQLite Database     │
-  │  Chain 4441  │                │  433K products       │
-  │  Merkle +    │◄───────────────│  12.7M price rows    │
+  │  Chain 4441  │                │  446K products       │
+  │  Merkle +    │◄───────────────│  26.9M price rows    │
   │  V2 Oracle   │   On-chain TX  │  FTS5 search index   │
   └──────────────┘                └──────────────────────┘
 
@@ -71,11 +71,11 @@ mcp = FastMCP(
     "LitVM TCG Oracle",
     instructions=(
         "TCG Price Oracle for the LitecoinVM ecosystem. "
-        "Search 433K+ trading card products (276K actively priced) across 13 games, "
+        "Search 446K+ trading card products (284K actively priced) across 25+ games, "
         "get real-time market prices, pull a calibrated conformal risk forecast for "
         "any card — honest VaR with Safe-Hold and Momentum letter grades — verify "
         "prices on-chain via Merkle proofs on LiteForge (Chain ID 4441), and run "
-        "provably-fair Monte Carlo simulations (Merton/GBM) calibrated from 13.5M+ "
+        "provably-fair Monte Carlo simulations (Merton/GBM) calibrated from 26.9M+ "
         "real price observations. "
         "Default forecasting is conformal (distribution-free, deterministic, honest "
         "VaR); Monte Carlo is an opt-in stochastic view. "
@@ -104,9 +104,9 @@ def search_cards(
     game: Optional[str] = None,
     limit: int = 10,
 ) -> str:
-    """Search 433K+ trading card products by name using full-text search.
+    """Search 446K+ trading card products by name using full-text search.
 
-    The catalog contains 433K products total — 276K are actively priced
+    The catalog contains 446K products total — 284K are actively priced
     with current market data. ~157K are catalog-only entries (tokens,
     promos, bundles) with no price history.
     Disney Lorcana, Flesh & Blood, Dragon Ball Super, Digimon, Star Wars,
@@ -224,7 +224,7 @@ def get_merkle_proof(product_id: int) -> str:
     cryptographic guarantee that this exact price was committed to the
     LitecoinVM blockchain by the oracle operator.
 
-    The TCG Price Oracle commits 276K actively-priced products to a
+    The TCG Price Oracle commits 284K actively-priced products to a
     single Merkle root on LiteForge daily. This tool returns the proof
     array that can be submitted to the MerklePriceOracle smart contract
     to trustlessly verify any card's price.
@@ -391,7 +391,7 @@ def simulate_price(
 
     HOW THE MATH WORKS:
     This is NOT fake data. The simulation calibrates parameters from REAL
-    market prices stored in the oracle database (12.7M+ price observations):
+    market prices stored in the oracle database (26.9M+ price observations):
 
       1. Look up the card → get product_id via FTS5 search
       2. Pull up to 365 days of daily price history

@@ -2,8 +2,8 @@
 LitVM TCG Oracle — MCP Server
 The first Model Context Protocol server for the LitecoinVM ecosystem.
 
-Provides AI agents with access to 433K+ trading card products
-(276K actively priced), on-chain Merkle proof verification, calibrated
+Provides AI agents with access to 446K+ trading card products
+(284K actively priced), on-chain Merkle proof verification, calibrated
 conformal risk forecasts (honest VaR + Safe-Hold/Momentum grades), and
 provably-fair Monte Carlo simulation — all powered by the TCG Price
 Oracle on LiteForge (Chain ID 4441).
