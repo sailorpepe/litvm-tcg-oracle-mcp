@@ -3,7 +3,7 @@ REST API Client — Thin wrapper for the TCG Price Oracle API.
 
 All off-chain data (search, prices, market snapshots) flows through
 oracle.the-undesirables.com, which is backed by a 1.2 GB SQLite
-database on the Mac Mini with FTS5 full-text search and 12.7M+ price rows.
+database on the Mac Mini with FTS5 full-text search and 26.9M+ price rows.
 
 Verified Endpoints (as deployed on Mac Mini):
   GET /health              → {"status":"ok", ...}

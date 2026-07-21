@@ -34,8 +34,8 @@ Calibration Pipeline:
   8. Run vectorized numpy simulation with calibrated parameters
   9. Return percentile bands + VaR/CVaR risk metrics
 
-All parameters are calibrated from REAL price data — 12.7M+ rows across
-433K products, collected daily from TCGPlayer market prices. When fewer
+All parameters are calibrated from REAL price data — 26.9M+ rows across
+446K products, collected daily from TCGPlayer market prices. When fewer
 than 5 data points exist, falls back to conservative TCG market priors
 (3% drift, 40% vol) clearly labeled as "default_tcg_priors".
 
