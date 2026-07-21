@@ -112,7 +112,7 @@ The oracle indexes the full TCGPlayer catalog and tracks live market prices:
 
 | Metric | Count | Description |
 |--------|-------|-------------|
-| **Total catalog** | 433,671 | All products across 13 games and 85 categories |
+| **Total catalog** | 446,694 | All products across 25+ games and 85 categories |
 | **Actively priced** | 276,788 | Products with a current `market_price > 0` |
 | **Price observations** | 13.5M+ | Daily snapshots collected over months |
 | **Merkle-provable** | 276,788 | Only actively-priced products are committed on-chain |
@@ -175,7 +175,7 @@ Search the full 446K product catalog using FTS5 full-text search.
 → search_cards(query="black lotus", game="Magic", limit=5)
 ```
 
-Covers 13 games: Pokémon, Magic: The Gathering, Yu-Gi-Oh!, One Piece, Disney Lorcana, Flesh & Blood, Dragon Ball Super, Digimon, Star Wars, Union Arena, MetaZoo, Cardfight Vanguard, My Hero Academia.
+Covers 25+ games including: Pokémon, Magic: The Gathering, Yu-Gi-Oh!, One Piece, Disney Lorcana, Flesh & Blood, Dragon Ball Super, Digimon, Star Wars, Union Arena, MetaZoo, Cardfight Vanguard, My Hero Academia.
 
 Returns product IDs needed for `get_price` and `get_merkle_proof`.
 
@@ -348,7 +348,7 @@ Top cards by value for any game.
                                      │  Oracle REST API │  │  LitVM LiteForge  │
                                      │  (Mac Mini)      │  │  LitVM LiteForge │
                                      │                  │  │             │
-                                     │  433K products   │  │  Merkle +   │
+                                     │  446K products   │  │  Merkle +   │
                                      │  13.5M prices    │  │  V2 Oracle  │
                                      │  FTS5 search     │  │  contracts  │
                                      └──────────────────┘  └─────────────┘
@@ -380,7 +380,7 @@ litvm-tcg-oracle
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Daily Merkle root for 276K products |
+| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Hourly Merkle root for 284K products |
 | **TCGPriceOracleV2** | [`0x697bF6...720E`](https://liteforge.explorer.caldera.xyz/address/0x697bF6AE96fb05a47106abd012C39855A16a720E) | Hourly TWAP for top 50 blue-chip cards |
 
 Both contracts are deployed on **LitVM LiteForge testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
