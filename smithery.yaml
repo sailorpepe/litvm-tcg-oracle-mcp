@@ -1,0 +1,14 @@
+# Smithery configuration — deploys the LitVM TCG oracle MCP server.
+# Thin client over the public oracle APIs (no keys, no local data): 455K+
+# card search, price history, Merkle proof verification on LiteForge
+# (Chain 4441), Monte Carlo simulation, AI card grading.
+runtime: "container"
+build:
+  dockerfile: Dockerfile
+  dockerBuildPath: .
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    properties: {}
+  exampleConfig: {}
