@@ -5,7 +5,7 @@
 <h3 align="center">The first Model Context Protocol server for the LitecoinVM (LitVM) ecosystem.</h3>
 
 <p align="center">
-Plug any AI agent into 446K+ real trading card prices across 25+ games — every price backed by on-chain Merkle proofs, not blind trust.
+Plug any AI agent into 455K+ real trading card prices across 25+ games — every price backed by on-chain Merkle proofs, not blind trust.
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@ Plug any AI agent into 446K+ real trading card prices across 25+ games — every
 
 <img src="https://raw.githubusercontent.com/sailorpepe/litvm-tcg-oracle-mcp/main/assets/demo.gif" alt="LitVM TCG Oracle MCP Demo" width="480" />
 
-*Browse 446K+ cards with on-chain verified prices*
+*Browse 455K+ cards with on-chain verified prices*
 
 </div>
 
@@ -31,14 +31,16 @@ Plug any AI agent into 446K+ real trading card prices across 25+ games — every
 ## 🔌 Connect over MCP — one URL, no install
 
 ```
-https://mcp.the-undesirables.com
+https://litvm.the-undesirables.com/mcp
 ```
 
-No install, no account, no API key. **12 tools** over streamable HTTP (MCP protocol
-`2025-06-18`; legacy SSE also served). Free tools answer immediately. Paid tools return an
-x402 `payment_required` carrying amount, network, and `payTo` — an agent with a funded
-wallet can settle and retry in the same session. Settlement only occurs on a successful
-response; failed calls are never charged.
+No install, no account, no API key. **13 tools** over streamable HTTP — all free.
+The full oracle through the LitVM lens: prices, on-chain Merkle proofs (raw AND
+graded slabs), calibrated forecasts with a public accuracy scorecard, card-collateral
+loan-terms previews, sports boards, the slab census, and the 4,444-soul fantasy
+league whose weekly lineups are committed to the PredictionRegistry on LiteForge
+before games score. Paid endpoints (full loan quotes, per-player sports forecasts)
+live on the flagship oracle at `https://mcp.the-undesirables.com` via x402.
 
 **Claude Desktop / Perplexity** — add it as a custom remote connector (Perplexity:
 Settings → Connectors → + Custom Connector → Remote).
@@ -100,7 +102,7 @@ Regular APIs require **trust**. You call an endpoint, you get a number, and you 
 | **Data source** | Opaque server | 13.5M+ verified market observations |
 | **Verification** | Trust the server | Merkle proof → on-chain verification |
 | **Forecasting** | None | Calibrated conformal risk forecast — honest VaR |
-| **Coverage** | Limited | 446K products, 284K actively priced |
+| **Coverage** | Limited | 455K products, 290K actively priced |
 | **For AI agents** | Manual integration | MCP — works in Claude, GPT, Cursor |
 | **Blockchain** | None | LitVM LiteForge |
 
@@ -167,9 +169,11 @@ Then ask your AI: *"Search for Charizard Base Set and simulate the price over 90
 
 ## Tools
 
+**13 tools** — seven core (below) plus six ecosystem tools added in v1.1.0: `get_graded_proof` (GradedPriceOracle slab proofs on Chain 4441), `get_fantasy_league` (souls' lineups, merkle-locked on LiteForge weekly), `get_oracle_scorecard` (the public 30-day coverage record — verify before trusting), `get_loan_terms_preview` (six-step max-LTV derivation for card collateral), `get_sports_board` (daily movers over on-chain-committed stat panels), and `get_census_summary` (cert-verified circulating slab supply).
+
 ### 1. `search_cards` — Full-Text Search
 
-Search the full 446K product catalog using FTS5 full-text search.
+Search the full 455K product catalog using FTS5 full-text search.
 
 ```
 → search_cards(query="black lotus", game="Magic", limit=5)
@@ -218,7 +222,7 @@ keccak256(bytes.concat(keccak256(abi.encode(
 
 Standard: OpenZeppelin MerkleProof (double-hash, sorted pairs)
 
-> Only the 284K actively-priced products are in the Merkle tree. Zero-price catalog entries return a `404` — this is correct behavior.
+> Only the ~290K actively-priced products are in the Merkle tree. Zero-price catalog entries return a `404` — this is correct behavior.
 
 ---
 
@@ -348,7 +352,7 @@ Top cards by value for any game.
                                      │  Oracle REST API │  │  LitVM LiteForge  │
                                      │  (Mac Mini)      │  │  LitVM LiteForge │
                                      │                  │  │             │
-                                     │  446K products   │  │  Merkle +   │
+                                     │  455K products   │  │  Merkle +   │
                                      │  13.5M prices    │  │  V2 Oracle  │
                                      │  FTS5 search     │  │  contracts  │
                                      └──────────────────┘  └─────────────┘
@@ -380,7 +384,7 @@ litvm-tcg-oracle
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Hourly Merkle root for 284K products |
+| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Hourly Merkle root for 290K products |
 | **TCGPriceOracleV2** | [`0x697bF6...720E`](https://liteforge.explorer.caldera.xyz/address/0x697bF6AE96fb05a47106abd012C39855A16a720E) | Hourly TWAP for top 50 blue-chip cards |
 
 Both contracts are deployed on **LitVM LiteForge testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
