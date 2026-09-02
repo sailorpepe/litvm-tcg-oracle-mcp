@@ -69,9 +69,10 @@ logger = logging.getLogger("litvm-tcg-oracle")
 
 mcp = FastMCP(
     "LitVM TCG Oracle",
+    website_url="https://litvm.the-undesirables.com",
     instructions=(
-        "TCG Price Oracle for the LitecoinVM ecosystem. "
-        "Search 446K+ trading card products (284K actively priced) across 25+ games, "
+        "TCG Price Oracle for the LitecoinVM ecosystem — 13 tools, all free. "
+        "Search 455K+ trading card products (~290K actively priced) across 25+ games, "
         "get real-time market prices, pull a calibrated conformal risk forecast for "
         "any card — honest VaR with Safe-Hold and Momentum letter grades — verify "
         "prices on-chain via Merkle proofs on LiteForge (Chain ID 4441), and run "
@@ -85,6 +86,12 @@ mcp = FastMCP(
         "Note: ~157K products in the catalog have no price history (tokens, promos, "
         "bundles, foreign-market-only items). These are searchable but not in the "
         "Merkle tree. "
+        "Beyond prices: graded-slab Merkle proofs (GradedPriceOracle, Chain 4441), "
+        "the 4,444-soul fantasy league whose weekly lineups are committed to the "
+        "PredictionRegistry on LiteForge before games score, a public 30-day "
+        "accuracy scorecard (verify before trusting), card-collateral loan-terms "
+        "previews, daily sports boards over on-chain-committed stat panels, and "
+        "the cert-verified slab census. "
         "Built by The Undesirables LLC — the first and only oracle on LitecoinVM."
     ),
     version=__version__,
