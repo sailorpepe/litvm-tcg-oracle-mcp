@@ -519,6 +519,74 @@ def _normalize_card(card: dict) -> dict:
     }
 
 
+@mcp.tool()
+def get_graded_proof(product_id: int, grade: str = "PSA 10") -> str:
+    """Merkle proof for a GRADED-slab price on the GradedPriceOracle contract
+    (LiteForge, Chain 4441). The graded price tree is committed on-chain
+    daily — this proof lets any agent verify a slab price trustlessly, the
+    same way get_merkle_proof verifies raw-card prices. Grades like
+    'PSA 10', 'PSA 9', 'BGS 9.5'."""
+    return json.dumps(client._get("/api/v1/graded/proof",
+                                  {"product_id": product_id, "grade": grade}))
+
+
+@mcp.tool()
+def get_fantasy_league(token_id: int = 0) -> str:
+    """The Undesirables fantasy league on LitecoinVM: 4,444 AI personalities
+    draft weekly fantasy lineups over the oracle's calibrated forecasts.
+    Every lineup is merkle-committed to the PredictionRegistry on LiteForge
+    (stream fantasy_souls) BEFORE games score. No token_id: league feed with
+    standings and the week's commit txs. With token_id: that soul's lineup,
+    personality traits, and drafting strategy."""
+    if token_id:
+        return json.dumps(client._get(f"/api/v1/fantasy/soul/{int(token_id)}"))
+    return json.dumps(client._get("/api/v1/fantasy/league"))
+
+
+@mcp.tool()
+def get_oracle_scorecard() -> str:
+    """The oracle's public accuracy record — verify before trusting. Rolling
+    30-day coverage on matured forecasts (recent: 90% bands covered 93%+
+    across 181K+ graded predictions), the souls' scored track record, and
+    the blind slab study. Every scored prediction was committed to LiteForge
+    + Base before its outcome existed, so the table cannot be curated."""
+    return json.dumps(client._get("/api/v1/accuracy"))
+
+
+@mcp.tool()
+def get_loan_terms_preview(product_id: int, term_days: int = 30) -> str:
+    """FREE worked derivation of card-collateral lending terms for cards on
+    today's published free board: value -> calibrated 99% tail ->
+    liquidation buffer -> liquidity cap -> max LTV, six steps shown with
+    price source and merkle proof links. term_days: 7, 14 or 30. Off-board
+    cards 404 with a pointer to the paid quote ($0.10 x402, all 2,000 rated
+    cards). Informational only — not financial advice."""
+    td = int(term_days) if int(term_days) in (7, 14, 30) else 30
+    return json.dumps(client._get(f"/api/v1/loan-terms/preview/{int(product_id)}",
+                                  {"term_days": td}))
+
+
+@mcp.tool()
+def get_sports_board(league: str = "", limit: int = 10) -> str:
+    """Daily sports movers — hot, high-volume players per live league with
+    calibrated 7-day forecast context. The underlying stat panels are
+    merkle-committed daily to SportsStatsRegistryV2 on LiteForge + Base.
+    Off-season leagues report dormant instead of serving frozen numbers."""
+    params = {"limit": max(1, min(int(limit), 50))}
+    if league:
+        params["league"] = str(league).strip().lower()
+    return json.dumps(client._get("/api/v1/sports/board", params))
+
+
+@mcp.tool()
+def get_census_summary() -> str:
+    """Observed graded-slab census totals: how many PSA/BGS/CGC/TAG slabs
+    the oracle tracks circulating on the open market (cert-verified; a
+    census of what is listed and pressing on price — NOT a pop report).
+    Census leaves are committed on-chain daily."""
+    return json.dumps(client._get("/api/v1/census/summary"))
+
+
 # ═══════════════════════════════════════════════════════════════
 # Entrypoint
 # ═══════════════════════════════════════════════════════════════
