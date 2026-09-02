@@ -610,9 +610,57 @@ def main():
     if transport == "stdio":
         mcp.run()
     else:
-        mcp.run(transport=transport,
-                host=os.getenv("LITVM_MCP_HOST", "127.0.0.1"),
-                port=int(os.getenv("LITVM_MCP_PORT", "8412")))
+        # Hosted HTTP: serve MCP at /mcp, but greet BROWSERS (no
+        # text/event-stream Accept) with a landing page carrying social
+        # tags — a shared link unfurls instead of showing a protocol error.
+        import uvicorn
+        inner = mcp.http_app(path="/mcp")
+        _LANDING = (
+            "<!doctype html><html><head><meta charset=utf-8>"
+            "<meta name=viewport content='width=device-width,initial-scale=1'>"
+            "<title>LitVM TCG Oracle — MCP Server</title>"
+            "<meta property='og:title' content='LitVM TCG Oracle — the first MCP server for the LitecoinVM ecosystem'>"
+            "<meta property='og:description' content='13 free tools for any AI agent: 455K+ card prices with Merkle proofs on LiteForge (Chain 4441), calibrated forecasts with a public accuracy scorecard, graded-slab proofs, loan-terms previews, and the 4,444-soul fantasy league.'>"
+            "<meta property='og:image' content='https://oracle.the-undesirables.com/static/og_litvm.png'>"
+            "<meta property='og:image:width' content='1200'><meta property='og:image:height' content='630'>"
+            "<meta name='twitter:card' content='summary_large_image'>"
+            "<meta name='twitter:image' content='https://oracle.the-undesirables.com/static/og_litvm.png'>"
+            "<style>body{background:#0a0d13;color:#e6edf3;font:16px/1.65 ui-monospace,Menlo,monospace;"
+            "max-width:46rem;margin:6vh auto;padding:0 1.25rem}h1{font-size:1.5rem;"
+            "background:linear-gradient(90deg,#3fb950,#58a6ff,#bc8cff);-webkit-background-clip:text;"
+            "background-clip:text;-webkit-text-fill-color:transparent}code,pre{background:#141922;"
+            "border:1px solid #2a3140;border-radius:6px}code{padding:.15em .4em}pre{padding:1rem;"
+            "overflow-x:auto}a{color:#58a6ff}.n{color:#8b949e}</style></head><body>"
+            "<h1>🍄 LitVM TCG Oracle — MCP endpoint</h1>"
+            "<p>This URL speaks the <a href='https://modelcontextprotocol.io'>Model Context Protocol</a> "
+            "to AI agents — the first MCP server for the LitecoinVM ecosystem. "
+            "<b>13 tools, all free, no keys:</b> 455K+ card prices with on-chain Merkle proofs "
+            "(raw and graded slabs) on LiteForge Chain 4441, calibrated forecasts with a "
+            "<a href='https://oracle.the-undesirables.com/api/v1/accuracy'>public accuracy scorecard</a>, "
+            "card-collateral loan previews, sports boards, the slab census, and the "
+            "<a href='https://oracle.the-undesirables.com/fantasy'>4,444-soul fantasy league</a>.</p>"
+            "<p>Point any MCP client here:</p><pre>https://litvm.the-undesirables.com/mcp</pre>"
+            "<p class=n>Claude / Cursor / Windsurf: add as a remote MCP server with that URL. "
+            "Local-first instead? <code>pip install litvm-tcg-oracle</code> · "
+            "<a href='https://github.com/sailorpepe/litvm-tcg-oracle-mcp'>source</a> · "
+            "by <a href='https://the-undesirables.com'>The Undesirables</a></p>"
+            "</body></html>")
+
+        async def app(scope, receive, send):
+            if scope["type"] == "http" and scope.get("method") == "GET":
+                hdrs = {k.decode().lower(): v.decode()
+                        for k, v in scope.get("headers", [])}
+                if "text/event-stream" not in hdrs.get("accept", ""):
+                    body = _LANDING.encode()
+                    await send({"type": "http.response.start", "status": 200,
+                                "headers": [(b"content-type", b"text/html; charset=utf-8"),
+                                            (b"content-length", str(len(body)).encode())]})
+                    await send({"type": "http.response.body", "body": body})
+                    return
+            await inner(scope, receive, send)
+
+        uvicorn.run(app, host=os.getenv("LITVM_MCP_HOST", "127.0.0.1"),
+                    port=int(os.getenv("LITVM_MCP_PORT", "8412")))
 
 
 if __name__ == "__main__":
