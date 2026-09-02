@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sailorpepe/litvm-tcg-oracle-mcp/main/assets/banner.png" alt="LitVM TCG Oracle — MCP Server" width="100%">
+  <img src="https://raw.githubusercontent.com/sailorpepe/litvm-tcg-oracle-mcp/main/assets/banner.gif" alt="LitVM TCG Oracle — MCP Server" width="100%">
 </p>
 
 <h3 align="center">The first Model Context Protocol server for the LitecoinVM (LitVM) ecosystem.</h3>
