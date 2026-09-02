@@ -524,12 +524,20 @@ def _normalize_card(card: dict) -> dict:
 # ═══════════════════════════════════════════════════════════════
 
 def main():
-    """Run the MCP server via stdio transport."""
+    """Run the MCP server. Default transport is stdio (pip/uvx users);
+    set LITVM_MCP_TRANSPORT=http (+ LITVM_MCP_PORT / LITVM_MCP_HOST) to
+    serve streamable HTTP for hosted deployments and directories."""
+    transport = os.getenv("LITVM_MCP_TRANSPORT", "stdio")
     logger.info(
         f"LitVM TCG Oracle MCP Server v{__version__} starting "
-        f"(API: {client.base_url})"
+        f"(API: {client.base_url}, transport: {transport})"
     )
-    mcp.run()
+    if transport == "stdio":
+        mcp.run()
+    else:
+        mcp.run(transport=transport,
+                host=os.getenv("LITVM_MCP_HOST", "127.0.0.1"),
+                port=int(os.getenv("LITVM_MCP_PORT", "8412")))
 
 
 if __name__ == "__main__":
