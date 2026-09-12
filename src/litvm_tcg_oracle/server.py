@@ -114,7 +114,10 @@ def search_cards(
     game: Optional[str] = None,
     limit: int = 10,
 ) -> str:
-    """Search 446K+ trading card products by name using full-text search.
+    """FROZEN INPUTS since 2026-09-07: the USD price series stopped, so this is
+    computed from the last published prices; responses carry usd_panel
+    {frozen: true, as_of}. Say "last published", never "today".
+    Search 446K+ trading card products by name using full-text search.
 
     The catalog contains 446K products total — 284K are actively priced
     with current market data. ~157K are catalog-only entries (tokens,
@@ -162,7 +165,10 @@ def get_price(
     product_id: Optional[int] = None,
     days: int = 30,
 ) -> str:
-    """Get the latest market price and historical price data for a trading card.
+    """FROZEN INPUTS since 2026-09-07: the USD price series stopped, so this is
+    computed from the last published prices; responses carry usd_panel
+    {frozen: true, as_of}. Say "last published", never "today".
+    Get the latest market price and historical price data for a trading card.
 
     Provide either a card name (fuzzy search) or a TCGPlayer product ID.
     Returns current market price, low (buy-it-now) price, and daily
@@ -348,7 +354,10 @@ def oracle_status() -> str:
 
 @mcp.tool()
 def get_forecast(card_name: str) -> str:
-    """Get the calibrated conformal risk forecast for a trading card.
+    """FROZEN INPUTS since 2026-09-07: the USD price series stopped, so this is
+    computed from the last published prices; responses carry usd_panel
+    {frozen: true, as_of}. Say "last published", never "today".
+    Get the calibrated conformal risk forecast for a trading card.
 
     This is the recommended, honest default forecast — distribution-free,
     deterministic, and never-under-protective. Unlike a Monte Carlo
@@ -393,7 +402,10 @@ def simulate_price(
     model: str = "merton",
     simulations: int = 10000,
 ) -> str:
-    """Run a Monte Carlo price simulation for a trading card (opt-in).
+    """FROZEN INPUTS since 2026-09-07: the USD price series stopped, so this is
+    computed from the last published prices; responses carry usd_panel
+    {frozen: true, as_of}. Say "last published", never "today".
+    Run a Monte Carlo price simulation for a trading card (opt-in).
 
     For the honest DEFAULT forecast — conformal VaR + Safe-Hold/Momentum
     grades — use get_forecast. This tool is the stochastic Monte Carlo
@@ -488,7 +500,11 @@ def get_market_snapshot(
     game: str = "Pokemon",
     limit: int = 25,
 ) -> str:
-    """Get a market overview — top trading cards sorted by value.
+    """SUSPENDED 2026-09-12: the USD price panel behind /api/v1/market froze on
+    2026-09-07. The oracle answers {"status": "suspended"} with the reason and
+    live alternatives (no charge). Prefer get_sports_board, get_loan_terms_preview
+    (graded slabs, live) or get_census_summary.
+    Get a market overview — top trading cards sorted by value.
 
     Returns the highest-value cards for a specific game with current
     market prices and low (buy-it-now) prices.
@@ -564,16 +580,21 @@ def get_oracle_scorecard() -> str:
 
 
 @mcp.tool()
-def get_loan_terms_preview(product_id: int, term_days: int = 30) -> str:
-    """FREE worked derivation of card-collateral lending terms for cards on
-    today's published free board: value -> calibrated 99% tail ->
-    liquidation buffer -> liquidity cap -> max LTV, six steps shown with
-    price source and merkle proof links. term_days: 7, 14 or 30. Off-board
-    cards 404 with a pointer to the paid quote ($0.10 x402, all 2,000 rated
-    cards). Informational only — not financial advice."""
+def get_loan_terms_preview(product_id: int, term_days: int = 30, grade: str = "") -> str:
+    """FREE worked derivation of GRADED-SLAB lending terms (v2, 2026-09-12): live
+    slab value (realized sales > delisting-inferred sales > ask median x 0.85)
+    -> historical 99% tail of the underlying card -> liquidation buffer ->
+    census liquidity cap -> max LTV, six steps shown. grade e.g. "PSA 10";
+    omitted = the slab's deepest-census grade. term_days: 7, 14 or 30. Only
+    free-board slabs (top 250 by census depth) return the derivation; others
+    404 with a pointer to the paid quote ($0.10 x402, ~1,100 rated slabs).
+    Raw-card quotes are no longer issued (USD level frozen 2026-09-07).
+    Informational only — not financial advice."""
     td = int(term_days) if int(term_days) in (7, 14, 30) else 30
-    return json.dumps(client._get(f"/api/v1/loan-terms/preview/{int(product_id)}",
-                                  {"term_days": td}))
+    params = {"term_days": td}
+    if grade:
+        params["grade"] = grade
+    return json.dumps(client._get(f"/api/v1/loan-terms/preview/{int(product_id)}", params))
 
 
 @mcp.tool()
