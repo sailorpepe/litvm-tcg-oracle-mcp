@@ -92,7 +92,7 @@ mcp = FastMCP(
         "Beyond prices: graded-slab Merkle proofs (GradedPriceOracle, Chain 4441), "
         "the 4,444-soul fantasy league whose weekly lineups are committed to the "
         "PredictionRegistry on LiteForge before games score, a public 30-day "
-        "accuracy scorecard (verify before trusting), card-collateral loan-terms "
+        "accuracy scorecard (verify before trusting), graded-slab loan-terms "
         "previews, daily sports boards over on-chain-committed stat panels, and "
         "the cert-verified slab census. "
         "Built by The Undesirables LLC — the first and only oracle on LitecoinVM."
@@ -559,7 +559,7 @@ def get_graded_proof(product_id: int, grade: str = "PSA 10") -> str:
 @mcp.tool()
 def get_fantasy_league(token_id: int = 0) -> str:
     """The Undesirables fantasy league on LitecoinVM: 4,444 AI personalities
-    draft weekly fantasy lineups over the oracle's calibrated forecasts.
+    draft weekly fantasy lineups over the oracle's calibrated sports forecasts.
     Every lineup is merkle-committed to the PredictionRegistry on LiteForge
     (stream fantasy_souls) BEFORE games score. No token_id: league feed with
     standings and the week's commit txs. With token_id: that soul's lineup,
@@ -644,7 +644,7 @@ def main():
             "<meta name=viewport content='width=device-width,initial-scale=1'>"
             "<title>LitVM TCG Oracle — MCP Server</title>"
             "<meta property='og:title' content='LitVM TCG Oracle — the first MCP server for the LitecoinVM ecosystem'>"
-            "<meta property='og:description' content='13 free tools for any AI agent: 456K+ card prices with Merkle proofs on LiteForge (Chain 4441), a daily Japanese-print panel with dealer buyback bids, calibrated forecasts with a public accuracy scorecard, graded-slab proofs and the 4,444-soul fantasy league.'>"
+            "<meta property='og:description' content='13 free tools for any AI agent: 456K+ products with Merkle proofs on LiteForge (Chain 4441; USD prices frozen 2026-09-07), a daily Japanese-print panel with dealer buyback bids, calibrated forecasts with a public accuracy scorecard, graded-slab proofs and the 4,444-soul fantasy league.'>"
             "<meta property='og:image' content='https://oracle.the-undesirables.com/static/og_litvm.png'>"
             "<meta property='og:image:width' content='1200'><meta property='og:image:height' content='630'>"
             "<meta name='twitter:card' content='summary_large_image'>"
@@ -658,10 +658,10 @@ def main():
             "<h1>🍄 LitVM TCG Oracle — MCP endpoint</h1>"
             "<p>This URL speaks the <a href='https://modelcontextprotocol.io'>Model Context Protocol</a> "
             "to AI agents — the first MCP server for the LitecoinVM ecosystem. "
-            "<b>13 tools, all free, no keys:</b> 456K+ card prices with on-chain Merkle proofs "
-            "(raw and graded slabs) on LiteForge Chain 4441, calibrated forecasts with a "
+            "<b>13 tools, all free, no keys:</b> 456K+ products with on-chain Merkle proofs (USD prices frozen 2026-09-07 — dated in-band; Japanese + graded panels refresh daily) "
+            "(raw and graded slabs) on LiteForge Chain 4441, calibrated forecasts (frozen USD inputs) with a "
             "<a href='https://oracle.the-undesirables.com/api/v1/accuracy'>public accuracy scorecard</a>, "
-            "card-collateral loan previews, sports boards, the slab census, and the "
+            "graded-slab loan previews, sports boards, the slab census, and the "
             "<a href='https://oracle.the-undesirables.com/fantasy'>4,444-soul fantasy league</a>.</p>"
             "<p>Point any MCP client here:</p><pre>https://litvm.the-undesirables.com/mcp</pre>"
             "<p class=n>Claude / Cursor / Windsurf: add as a remote MCP server with that URL. "
