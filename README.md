@@ -83,7 +83,7 @@ AI agents are making decisions with market data — but how do they know the dat
 
 Regular APIs require **trust**. You call an endpoint, you get a number, and you hope it's accurate. There's no way to verify it. For AI agents managing portfolios, executing trades, or assessing collateral, this is a problem.
 
-**This MCP server solves it.** Every actively-priced product in the oracle is committed to a Merkle root on-chain hourly. Any agent can request a Merkle proof for any card and independently verify the price against the LitVM LiteForge blockchain — no trust required.
+**This MCP server solves it.** Every actively-priced product in the oracle is committed to a Merkle root on-chain daily — the USD root last advanced 2026-09-07 (feed frozen) and stays verifiable; Japanese, graded and sports panels advance daily. Any agent can request a Merkle proof for any card and independently verify the price against the LitVM LiteForge blockchain — no trust required.
 
 ### What Makes This Different
 
@@ -245,9 +245,9 @@ Returns the agent-complete forecast: `price`, `as_of`, `regime`, point estimate,
 
 ---
 
-### 6. `simulate_price` — Monte Carlo Simulation
+### 6. `simulate_price` — Monte Carlo Simulation (FROZEN INPUTS since 2026-09-07)
 
-An opt-in stochastic view — Monte Carlo price paths (Merton/GBM) calibrated from real market data. Use `get_forecast` for the honest default.
+An opt-in stochastic view — Monte Carlo price paths (Merton/GBM) calibrated from real market data. **The USD price series it calibrates on stopped 2026-09-07; responses carry `usd_panel {frozen: true}`. Say "last published", never "today".** Use `get_forecast` for the honest default.
 
 ```
 → simulate_price(card_name="Charizard Base Set", days=30, model="merton")
@@ -316,6 +316,8 @@ Extends GBM by adding Poisson-distributed price jumps to capture sudden market e
 
 ### 6. `get_market_snapshot` — Market Overview
 
+> **SUSPENDED 2026-09-12** — `/api/v1/market` is suspended while the USD panel is frozen; the oracle answers `{"status": "suspended"}` with live alternatives and does not charge.
+
 Top cards by value for any game.
 
 ```
@@ -374,8 +376,8 @@ litvm-tcg-oracle
 
 | Contract | Address | Purpose |
 |----------|---------|---------|
-| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Hourly Merkle root for 290K products |
-| **TCGPriceOracleV2** | [`0x697bF6...720E`](https://liteforge.explorer.caldera.xyz/address/0x697bF6AE96fb05a47106abd012C39855A16a720E) | Hourly TWAP for top 50 blue-chip cards |
+| **MerklePriceOracle** | [`0x96B124...170Cd`](https://liteforge.explorer.caldera.xyz/address/0x96B124f50156589274ADF8F674509374752170Cd) | Merkle root for 290K products (USD feed frozen 2026-09-07 — root no longer advances, still verifiable) |
+| **TCGPriceOracleV2** | [`0x697bF6...720E`](https://liteforge.explorer.caldera.xyz/address/0x697bF6AE96fb05a47106abd012C39855A16a720E) | Hourly TWAP updater for top 50 blue-chip cards (feed has not moved since 2026-09-07) |
 
 Both contracts are deployed on **LitVM LiteForge testnet** (Chain ID 4441) via the [Caldera RPC](https://liteforge.rpc.caldera.xyz/http).
 
