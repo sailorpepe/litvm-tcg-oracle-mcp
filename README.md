@@ -24,7 +24,7 @@ Plug any AI agent into 455K+ real trading card prices across 25+ games — every
 https://litvm.the-undesirables.com/mcp
 ```
 
-No install, no account, no API key. **13 tools** over streamable HTTP — all free.
+No install, no account, no API key. **14 tools** over streamable HTTP — all free.
 The full oracle through the LitVM lens: prices, on-chain Merkle proofs (raw AND
 graded slabs), calibrated forecasts with a public accuracy scorecard, card-collateral
 loan-terms previews, sports boards, the slab census, and the 4,444-soul fantasy
@@ -159,7 +159,7 @@ Then ask your AI: *"Search for Charizard Base Set and simulate the price over 90
 
 ## Tools
 
-**13 tools** — seven core (below) plus six ecosystem tools added in v1.1.0: `get_graded_proof` (GradedPriceOracle slab proofs on Chain 4441), `get_fantasy_league` (souls' lineups, merkle-locked on LiteForge weekly), `get_oracle_scorecard` (the public 30-day coverage record — verify before trusting), `get_loan_terms_preview` (six-step max-LTV derivation for card collateral), `get_sports_board` (daily movers over on-chain-committed stat panels), and `get_census_summary` (cert-verified circulating slab supply).
+**14 tools** — seven core (below) plus seven ecosystem tools added in v1.1.0: `get_graded_proof` (GradedPriceOracle slab proofs on Chain 4441), `get_fantasy_league` (souls' lineups, merkle-locked on LiteForge weekly), `get_oracle_scorecard` (the public 30-day coverage record — verify before trusting), `get_loan_terms_preview` (six-step max-LTV derivation for card collateral), `get_sports_board` (daily movers over on-chain-committed stat panels), and `get_census_summary` (cert-verified circulating slab supply).
 
 ### 1. `search_cards` — Full-Text Search
 
