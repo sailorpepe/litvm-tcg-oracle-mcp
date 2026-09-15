@@ -71,7 +71,7 @@ mcp = FastMCP(
     "LitVM TCG Oracle",
     website_url="https://litvm.the-undesirables.com",
     instructions=(
-        "TCG Price Oracle for the LitecoinVM ecosystem — 14 tools, all free. "
+        "TCG Price Oracle for the LitecoinVM ecosystem — 16 tools, all free. "
         "Search 456K+ trading card products across 25+ games. USD prices are currently "
         "FROZEN at their last good date (every response carries it); a Japanese-print "
         "panel of 364K cards refreshes daily, 167K of them with both an ask and a "
@@ -631,6 +631,26 @@ def get_jp_summary() -> str:
     return json.dumps(client._get("/api/v1/jp/summary"))
 
 
+@mcp.tool()
+def get_graded_asks(product_id: int) -> str:
+    """Graded-slab ASKING prices for one card — PSA/BGS/CGC medians by grade
+    with listing counts, low/high, as-of per grade and the explicit price_basis
+    (eBay asks, not sold prices). FREE, daily, merkle-committed on
+    GradedPriceOracle. The LIVE value layer while the USD raw-card panel is
+    frozen, and the basis of the graded-slab loan terms."""
+    return json.dumps(client._get("/api/v1/graded", {"product_id": int(product_id)}))
+
+
+@mcp.tool()
+def get_loan_universe() -> str:
+    """Every graded slab the Loan-Terms Oracle will quote (~1,100+): grade, live
+    ask median, census depth, liquidity tier, rank and a free_board flag (the
+    top 250 by census depth carry a free derivation via get_loan_terms_preview).
+    FREE. v2: graded slabs only — raw-card quotes stopped when the USD level
+    froze 2026-09-07."""
+    return json.dumps(client._get("/api/v1/loan-terms/universe"))
+
+
 # ═══════════════════════════════════════════════════════════════
 # Entrypoint
 # ═══════════════════════════════════════════════════════════════
@@ -657,7 +677,7 @@ def main():
             "<meta name=viewport content='width=device-width,initial-scale=1'>"
             "<title>LitVM TCG Oracle — MCP Server</title>"
             "<meta property='og:title' content='LitVM TCG Oracle — the first MCP server for the LitecoinVM ecosystem'>"
-            "<meta property='og:description' content='14 free tools for any AI agent: 456K+ products with Merkle proofs on LiteForge (Chain 4441; USD prices frozen 2026-09-07), a daily Japanese-print panel with dealer buyback bids, calibrated forecasts with a public accuracy scorecard, graded-slab proofs and the 4,444-soul fantasy league.'>"
+            "<meta property='og:description' content='16 free tools for any AI agent: 456K+ products with Merkle proofs on LiteForge (Chain 4441; USD prices frozen 2026-09-07), a daily Japanese-print panel with dealer buyback bids, calibrated forecasts with a public accuracy scorecard, graded-slab proofs and the 4,444-soul fantasy league.'>"
             "<meta property='og:image' content='https://oracle.the-undesirables.com/static/og_litvm.png'>"
             "<meta property='og:image:width' content='1200'><meta property='og:image:height' content='630'>"
             "<meta name='twitter:card' content='summary_large_image'>"
@@ -671,7 +691,7 @@ def main():
             "<h1>🍄 LitVM TCG Oracle — MCP endpoint</h1>"
             "<p>This URL speaks the <a href='https://modelcontextprotocol.io'>Model Context Protocol</a> "
             "to AI agents — the first MCP server for the LitecoinVM ecosystem. "
-            "<b>14 tools, all free, no keys:</b> 456K+ products with on-chain Merkle proofs (USD prices frozen 2026-09-07 — dated in-band; Japanese + graded panels refresh daily) "
+            "<b>16 tools, all free, no keys:</b> 456K+ products with on-chain Merkle proofs (USD prices frozen 2026-09-07 — dated in-band; Japanese + graded panels refresh daily) "
             "(raw and graded slabs) on LiteForge Chain 4441, calibrated forecasts (frozen USD inputs) with a "
             "<a href='https://oracle.the-undesirables.com/api/v1/accuracy'>public accuracy scorecard</a>, "
             "graded-slab loan previews, sports boards, the slab census, and the "
