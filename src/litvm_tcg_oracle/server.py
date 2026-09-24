@@ -642,13 +642,46 @@ def get_graded_asks(product_id: int) -> str:
 
 
 @mcp.tool()
-def get_loan_universe() -> str:
-    """Every graded slab the Loan-Terms Oracle will quote (~1,100+): grade, live
-    ask median, census depth, liquidity tier, rank and a free_board flag (the
-    top 250 by census depth carry a free derivation via get_loan_terms_preview).
-    FREE. v2: graded slabs only — raw-card quotes stopped when the USD level
-    froze 2026-09-07."""
-    return json.dumps(client._get("/api/v1/loan-terms/universe"))
+def get_loan_universe(limit: int = 50, tier: str = "", free_board_only: bool = False,
+                      min_value_usd: float = 0.0) -> str:
+    """The graded slabs the Loan-Terms Oracle will quote, best collateral first:
+    grade, live ask median, census depth, liquidity tier, rank and a free_board
+    flag (the top 250 by census depth carry a free derivation via
+    get_loan_terms_preview). FREE. v2: graded slabs only — raw-card quotes
+    stopped when the USD level froze 2026-09-07.
+
+    Returns a PAGE, not the whole book: the full universe is ~1,400 slabs and
+    serialises to ~865 KB, which would swamp an agent's context in one call.
+    `total_matching` and `returned` say what you are holding.
+
+    limit           rows to return (default 50, max 500)
+    tier            'deep' | 'moderate' | 'thin' | 'illiquid'
+    free_board_only True to keep only slabs with a free worked derivation
+    min_value_usd   drop slabs whose ask median is below this (0 = no floor)
+    """
+    d = client._get("/api/v1/loan-terms/universe")
+    if not isinstance(d, dict) or "cards" not in d:
+        return json.dumps(d)
+    cards = d.get("cards") or []
+    t = str(tier).strip().lower()
+    if t:
+        cards = [c for c in cards if str(c.get("liquidity_tier", "")).lower() == t]
+    if free_board_only:
+        cards = [c for c in cards if c.get("free_board")]
+    if min_value_usd:
+        cards = [c for c in cards if (c.get("ask_median_usd") or 0) >= float(min_value_usd)]
+    matching = len(cards)
+    n = max(1, min(int(limit), 500))
+    d["cards"] = cards[:n]
+    d["returned"] = len(d["cards"])
+    d["total_matching"] = matching
+    d["filters"] = {"tier": t or None, "free_board_only": free_board_only,
+                    "min_value_usd": min_value_usd or None, "limit": n}
+    d["paging_note"] = (
+        f"showing {len(d['cards'])} of {matching} matching slabs (universe total {d.get('total')}). "
+        "Narrow with tier / free_board_only / min_value_usd, or raise limit (max 500). "
+        "The full universe is ~865 KB and is deliberately not returned in one call.")
+    return json.dumps(d)
 
 
 # ═══════════════════════════════════════════════════════════════
