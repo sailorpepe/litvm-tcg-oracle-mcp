@@ -21,10 +21,10 @@ CHAIN_ID = 4441
 BLOCK_EXPLORER = "https://liteforge.explorer.caldera.xyz"
 
 # ── Contract Addresses (deployed on LiteForge testnet) ───────
-# These are read from deployment artifacts if available,
-# otherwise use the known addresses.
-MERKLE_ORACLE_ADDRESS = None  # Set dynamically
-V2_ORACLE_ADDRESS = None      # Set dynamically
+# Public, verified on-chain 2026-09-26. Override with LITVM_MERKLE_ADDRESS /
+# LITVM_V2_ADDRESS or a local merkle_deployment.json / v2_deployment.json.
+MERKLE_ORACLE_ADDRESS = "0x20A812309AD14aa39B59aE2791972dfe8dDDe80E"
+V2_ORACLE_ADDRESS = "0x697bF6AE96fb05a47106abd012C39855A16a720E"
 
 # ── Minimal ABIs (read-only functions only) ──────────────────
 
@@ -39,21 +39,22 @@ MERKLE_ABI = json.loads("""[
 
 V2_ABI = json.loads("""[
     {"inputs":[],"name":"totalUpdates","outputs":[{"type":"uint256"}],"stateMutability":"view","type":"function"},
-    {"inputs":[],"name":"lastUpdateTimestamp","outputs":[{"type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"productCount","outputs":[{"type":"uint256"}],"stateMutability":"view","type":"function"},
+    {"inputs":[],"name":"paused","outputs":[{"type":"bool"}],"stateMutability":"view","type":"function"},
     {"inputs":[],"name":"owner","outputs":[{"type":"address"}],"stateMutability":"view","type":"function"}
 ]""")
 
 
 def _load_contract_addresses() -> dict:
-    """Attempt to load contract addresses from deployment artifacts."""
+    """Contract addresses: env override, then local deploy artifacts, then the
+    known public LiteForge deployments (so installs without artifacts work)."""
     import os
-    addresses = {}
+    addresses = {"merkle": MERKLE_ORACLE_ADDRESS, "v2": V2_ORACLE_ADDRESS}
 
-    # Search common deployment paths
+    # Optional local overrides (e.g. a redeploy not yet shipped in a release)
     search_paths = [
-        os.path.expanduser("~/Documents/Meme Merchants/litvm-tcg-oracle/scripts"),
-        os.path.expanduser("~/Documents/Meme Merchants/litvm-tcg-oracle/artifacts"),
-        os.path.expanduser("~/Documents/Meme Merchants/litvm-tcg-oracle/airdrop-to-mac-mini"),
+        os.path.expanduser(p) for p in
+        os.environ.get("LITVM_DEPLOY_DIRS", "").split(os.pathsep) if p
     ]
 
     for base in search_paths:
@@ -75,6 +76,8 @@ def _load_contract_addresses() -> dict:
             except Exception:
                 pass
 
+    addresses["merkle"] = os.environ.get("LITVM_MERKLE_ADDRESS") or addresses["merkle"]
+    addresses["v2"] = os.environ.get("LITVM_V2_ADDRESS") or addresses["v2"]
     return addresses
 
 
@@ -149,13 +152,13 @@ def get_oracle_status() -> dict:
                     abi=V2_ABI,
                 )
                 total_updates = v2.functions.totalUpdates().call()
-                last_ts = v2.functions.lastUpdateTimestamp().call()
 
                 status["contracts"]["v2_oracle"] = {
                     "address": v2_addr,
                     "explorer_url": f"{BLOCK_EXPLORER}/address/{v2_addr}",
                     "total_updates": total_updates,
-                    "last_update_timestamp": last_ts,
+                    "product_count": v2.functions.productCount().call(),
+                    "paused": v2.functions.paused().call(),
                     "update_frequency": "Hourly TWAP",
                     "coverage": "Top 50 blue-chip cards",
                 }
@@ -164,12 +167,6 @@ def get_oracle_status() -> dict:
                     "address": v2_addr,
                     "error": str(e),
                 }
-
-        if not addresses:
-            status["contracts"]["note"] = (
-                "Contract addresses not found locally. "
-                "Deploy artifacts expected at ~/Documents/Meme Merchants/litvm-tcg-oracle/scripts/"
-            )
 
         return status
 
@@ -192,11 +189,11 @@ def _get_oracle_status_fallback() -> dict:
         },
         "contracts": {
             "merkle_oracle": {
-                "address": addresses.get("merkle", "Unknown — deploy artifacts not found"),
-                "description": "Single Merkle root committing 446K+ product prices daily",
+                "address": addresses["merkle"],
+                "description": "Single Merkle root committing every tracked product price daily",
             },
             "v2_oracle": {
-                "address": addresses.get("v2", "Unknown — deploy artifacts not found"),
+                "address": addresses["v2"],
                 "description": "Hourly TWAP price feeds for top 50 blue-chip cards",
             },
         },
