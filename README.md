@@ -45,9 +45,9 @@ Settings → Connectors → + Custom Connector → Remote).
 }
 ```
 
-Tools: `search_tcg_products`, `market_snapshot`, `grade_card`, `grade_or_not`,
-`simulate_price`, `card_forecast`, `trending_cards`, `optimize_portfolio`,
-`recommend_workflow`, `check_accuracy`.
+Tools include `search_tcg_products`, `card_forecast`, `simulate_price`,
+`recommend_workflow` and `oracle_scorecard` — call `tools/list` for the live set.
+Everything is free: pay-per-call has been paused since 2026-10-02, and AI grading is retired.
 
 Search is set-aware — `search_tcg_products("Base Set Charizard")` separates Base Set,
 Base Set 2, and Shadowless rather than returning every Charizard printing. Every result

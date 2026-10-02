@@ -540,8 +540,11 @@ def _normalize_card(card: dict) -> dict:
         "product_id": card.get("product_id", card.get("productId")),
         "name": card.get("name", card.get("cleanName", card.get("clean_name", ""))),
         "game": card.get("game", card.get("categoryName", card.get("category_name", ""))),
-        "market_price": card.get("market_price", card.get("marketPrice")),
+        # the oracle sends market_price_usd (2026-09+); older shapes kept as fallbacks
+        "market_price": card.get("market_price_usd", card.get("market_price", card.get("marketPrice"))),
         "low_price": card.get("low_price", card.get("lowPrice")),
+        "set": card.get("set", card.get("set_name", card.get("groupName", ""))),
+        "image_url": card.get("image_url"),
     }
 
 
@@ -587,7 +590,8 @@ def get_loan_terms_preview(product_id: int, term_days: int = 30, grade: str = ""
     census liquidity cap -> max LTV, six steps shown. grade e.g. "PSA 10";
     omitted = the slab's deepest-census grade. term_days: 7, 14 or 30. Only
     free-board slabs (top 250 by census depth) return the derivation; others
-    404 with a pointer to the paid quote ($0.10 x402, ~1,100 rated slabs).
+    404 with a pointer to the full quote at /api/v1/loan-terms (free since
+    2026-10-02, when pay-per-call was paused; ~1,100 rated slabs).
     Raw-card quotes are no longer issued (USD level frozen 2026-09-07).
     Informational only — not financial advice."""
     td = int(term_days) if int(term_days) in (7, 14, 30) else 30
